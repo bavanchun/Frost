@@ -2,6 +2,8 @@
 
 Personal-build release workflow for the `bavanchun/Frost` fork. Targets macOS 14+, signed with a free Personal Apple Developer account (no notarization, runs locally only).
 
+This document owns release mechanics. The surrounding process rules — branching, pull requests, and the version approval gate — live in [`DEVELOPMENT_WORKFLOW.md`](DEVELOPMENT_WORKFLOW.md).
+
 ## One-Time Setup
 
 ### 1. Sparkle Ed25519 keypair
@@ -36,6 +38,25 @@ Copy the printed public key (base64, 44 chars) into `Frost/Info.plist` → `SUPu
 gh auth login   # choose github.com, account bavanchun, scope: repo
 gh auth status  # confirm active account is bavanchun
 ```
+
+### 4. SSH tag signing
+
+Release tags are signed with the maintainer's SSH key rather than GPG. Configured per-repo:
+
+```bash
+git config --local gpg.format ssh
+git config --local user.signingkey ~/.ssh/id_ed25519.pub
+git config --local tag.gpgsign true
+```
+
+The same public key must be registered on GitHub as a **signing** key (separate from the authentication key) for the "Verified" badge to appear:
+
+```bash
+gh auth refresh -h github.com -s admin:ssh_signing_key
+gh ssh-key add ~/.ssh/id_ed25519.pub --type signing --title "Frost tag signing"
+```
+
+Verify signing works before a release: `git tag -s _sigtest -m t && git cat-file -p _sigtest | grep "SSH SIGNATURE" && git tag -d _sigtest`.
 
 ## Versioning Policy
 
@@ -186,7 +207,7 @@ For subsequent releases, **append** a new `<item>` above the previous one. Spark
 Confirm the version was approved (see Versioning Policy) before running this — pushing a tag is the point of no return.
 
 ```bash
-git tag v${VERSION}
+git tag -s v${VERSION} -m "Frost ${VERSION}"
 git push origin v${VERSION}
 
 gh release create v${VERSION} \
@@ -262,7 +283,7 @@ If missing, regenerate through Xcode Accounts → team → "Manage Certificates"
 - [ ] `codesign --verify --verbose=4` confirms "valid on disk"
 - [ ] `ditto` zip + `sign_update` for EdDSA signature
 - [ ] Update `appcast.xml` (append `<item>`, bump `pubDate`)
-- [ ] `git tag v<x.y.z>` + `git push origin v<x.y.z>`
+- [ ] `git tag -s v<x.y.z>` (SSH-signed) + `git push origin v<x.y.z>`
 - [ ] `gh release create v<x.y.z> Frost-<x.y.z>.zip appcast.xml`
 - [ ] Verify `curl -sIL .../releases/latest/download/appcast.xml` → 302 to new release
 - [ ] Install locally, confirm process is running (`pgrep -fl Frost.app`) and `defaults read com.vchun.Frost` shows fork-owned keys

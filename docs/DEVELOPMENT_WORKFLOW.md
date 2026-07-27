@@ -799,6 +799,12 @@ Update this file after every upstream synchronization.
 
 Releases must be created from `main`.
 
+`docs/release-guide.md` is the single source of truth for release mechanics: the
+verified build, code signing, Sparkle appcast, and publishing commands. This
+section defines only the process rules around it. When the two documents appear
+to disagree about a command, the release guide wins, because its steps are
+recorded from releases that actually shipped.
+
 Normal release flow:
 
 ```text
@@ -831,28 +837,18 @@ Do not use a permanent `release` branch.
 
 ## 24. Semantic Versioning
 
-Frost follows Semantic Versioning:
+Frost follows Semantic Versioning as `MAJOR.MINOR.PATCH`.
 
-```text
-MAJOR.MINOR.PATCH
-```
+The bump rules and the mandatory approval gate are defined in
+`docs/release-guide.md` → Versioning Policy. Two rules from that policy govern
+every release and are repeated here because they constrain this workflow:
 
-Examples:
-
-```text
-1.0.0
-1.1.0
-1.1.1
-2.0.0
-```
-
-Version rules:
-
-```text
-PATCH → backward-compatible bug fix
-MINOR → backward-compatible feature
-MAJOR → breaking behavior, migration, or compatibility change
-```
+* A version number is never chosen automatically. Propose it, obtain explicit
+  maintainer approval, and only then create the tag. This applies to automated
+  tooling and coding agents.
+* `CURRENT_PROJECT_VERSION` is a separate monotonic build counter that
+  increments on every release regardless of the semantic bump, because Sparkle
+  orders updates by it.
 
 Pre-release versions:
 
@@ -862,40 +858,36 @@ Pre-release versions:
 1.2.0-rc.1
 ```
 
-Release tags:
+Release tags are signed and pushed only after the version is approved:
 
 ```bash
 git tag -s v1.2.0 -m "Frost 1.2.0"
 git push origin v1.2.0
 ```
 
-Tags must be created from commits already present on `main`.
+Tag signing uses SSH signing (`gpg.format = ssh`) with the maintainer's SSH key.
+Tags must be created from commits already present on `main`. Pushing a tag is
+the point of no return: an inflated version number cannot be withdrawn once
+Sparkle clients have seen it.
 
 ---
 
 ## 25. Release Checklist
 
-Before publishing a release:
+The executable release checklist lives in `docs/release-guide.md` →
+Future-Release Checklist. Follow it verbatim; it is maintained against the
+signing and Sparkle flow that this fork actually uses.
+
+Duplicating that checklist here would create a second copy that silently drifts
+out of date, so this document deliberately does not restate it.
+
+These workflow preconditions apply before the release checklist begins:
 
 ```text
-[ ] main is synchronized
-[ ] CI passes
-[ ] Marketing version is updated
-[ ] Build number is updated
+[ ] main is synchronized and every intended change is merged
+[ ] CI passes on main
 [ ] CHANGELOG is updated
-[ ] Release build succeeds
-[ ] Signing configuration is correct
-[ ] Hardened Runtime is correct where applicable
-[ ] Sparkle configuration is verified
-[ ] Update from the previous version is tested
-[ ] Fresh installation is tested
-[ ] Accessibility permission is tested
-[ ] Screen Recording permission is tested
-[ ] Existing settings remain intact
-[ ] Release archive is validated
-[ ] Git tag is created
-[ ] GitHub Release is published
-[ ] Download links are verified
+[ ] The version number has been explicitly approved
 ```
 
 ---
@@ -1000,18 +992,18 @@ Update documentation when a change affects:
 * Upstream synchronization.
 * Contributor workflow.
 
-Recommended documentation files:
+Current documentation files:
 
 ```text
 docs/
-├── ARCHITECTURE.md
-├── DEVELOPMENT.md
-├── RELEASING.md
-├── UPSTREAM.md
-└── DECISIONS/
+├── DEVELOPMENT_WORKFLOW.md   this document: process rules
+├── release-guide.md          release mechanics: build, signing, Sparkle, publish
+└── UPSTREAM.md               upstream Ice relationship and sync state
 ```
 
-Important architectural decisions should be stored as Architecture Decision Records.
+Additional documents are created when a real need appears, not in advance.
+Important architectural decisions should be stored as Architecture Decision
+Records under `docs/DECISIONS/`, which is created with the first such record.
 
 ---
 
