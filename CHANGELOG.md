@@ -11,7 +11,12 @@ All notable changes to Frost are recorded here. Frost follows Semantic Versionin
 
 ### Changed
 
+- The menu bar icon formerly listed as "Ice Cube" is now **Snowflake**, drawn from SF Symbols. Anyone who had selected the old icon is moved to Snowflake automatically on first launch; nothing needs to be done by hand.
 - Release tags are now SSH-signed. `main` is protected: changes reach it through pull requests only.
+
+### Removed
+
+- The Ice Cube image assets, the last Ice-branded artwork outside the app icon.
 
 ## [1.0.1] - 2026-07-28
 

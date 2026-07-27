@@ -23,6 +23,7 @@ extension MigrationManager {
             try performAll(blocks: [
                 manager.migrate0_8_0,
                 manager.migrate0_10_0,
+                manager.migrate1_1_0,
             ])
         } catch {
             logError(error)
@@ -300,6 +301,42 @@ extension MigrationManager {
             return .failureAndLogError(.appearanceConfigurationMigrationError(.otherError(error)))
         }
         return .success
+    }
+}
+
+// MARK: - Migrate 1.1.0
+
+extension MigrationManager {
+    /// Performs all migrations for the `1.1.0` release, catching any thrown
+    /// errors and rethrowing them as a combined error.
+    private func migrate1_1_0() throws {
+        guard !Defaults.bool(forKey: .hasMigrated1_1_0) else {
+            return
+        }
+        try MigrationManager.performAll(blocks: [
+            migrateFrostIcon1_1_0,
+        ])
+        Defaults.set(true, forKey: .hasMigrated1_1_0)
+        Logger.migration.info("Successfully migrated to 1.1.0 settings")
+    }
+
+    /// Migrates a saved Frost icon that names the retired ice cube image set
+    /// to the snowflake image set that replaced it.
+    ///
+    /// The retired name is no longer a case of `ControlItemImageSet.Name`, so a
+    /// saved icon that uses it can no longer be decoded. Left alone, the decode
+    /// failure is only logged and the icon quietly reverts to the default,
+    /// discarding a choice the user made. Any other icon that fails to decode is
+    /// past repair and would be discarded the same way, so both are rewritten.
+    private func migrateFrostIcon1_1_0() throws {
+        guard
+            let data = Defaults.data(forKey: .frostIcon),
+            (try? decoder.decode(ControlItemImageSet.self, from: data)) == nil
+        else {
+            return
+        }
+        Defaults.set(try encoder.encode(ControlItemImageSet.snowflakeFrostIcon), forKey: .frostIcon)
+        Logger.migration.info("Replaced an unreadable Frost icon with the snowflake icon")
     }
 }
 

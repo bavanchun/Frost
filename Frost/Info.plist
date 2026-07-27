@@ -2,10 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<!-- Enabled up front because a menu bar accessory cannot bring Sparkle's update-permission prompt to the front; see docs/UPSTREAM.md. -->
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
+	<!-- Points at this fork's releases, not upstream Ice's. -->
 	<key>SUFeedURL</key>
 	<string>https://github.com/bavanchun/Frost/releases/latest/download/appcast.xml</string>
+	<!-- This fork's Ed25519 public key; the private key lives in the Keychain, see docs/release-guide.md. -->
 	<key>SUPublicEDKey</key>
 	<string>bmSMi+6/ONtryIpi0NiU5f4FSWYiAr+eFH5VjP9jdqE=</string>
 </dict>
