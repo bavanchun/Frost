@@ -15,7 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		7166832A2A767E6A006ABF84 /* Ice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ice.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7166832A2A767E6A006ABF84 /* Frost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Frost.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -25,12 +25,12 @@
 				Info.plist,
 				Resources/Acknowledgements.rtf,
 			);
-			target = 716683292A767E6A006ABF84 /* Ice */;
+			target = 716683292A767E6A006ABF84 /* Frost */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		71BDFBE12C978E2A00EF145F /* Ice */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (71BDFC6C2C978E2A00EF145F /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Ice; sourceTree = "<group>"; };
+		71BDFBE12C978E2A00EF145F /* Frost */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (71BDFC6C2C978E2A00EF145F /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Frost; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +52,7 @@
 		716683212A767E6A006ABF84 = {
 			isa = PBXGroup;
 			children = (
-				71BDFBE12C978E2A00EF145F /* Ice */,
+				71BDFBE12C978E2A00EF145F /* Frost */,
 				7166832B2A767E6A006ABF84 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -60,7 +60,7 @@
 		7166832B2A767E6A006ABF84 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7166832A2A767E6A006ABF84 /* Ice.app */,
+				7166832A2A767E6A006ABF84 /* Frost.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -68,9 +68,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		716683292A767E6A006ABF84 /* Ice */ = {
+		716683292A767E6A006ABF84 /* Frost */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 716683392A767E6B006ABF84 /* Build configuration list for PBXNativeTarget "Ice" */;
+			buildConfigurationList = 716683392A767E6B006ABF84 /* Build configuration list for PBXNativeTarget "Frost" */;
 			buildPhases = (
 				716683262A767E6A006ABF84 /* Sources */,
 				716683272A767E6A006ABF84 /* Frameworks */,
@@ -82,9 +82,9 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				71BDFBE12C978E2A00EF145F /* Ice */,
+				71BDFBE12C978E2A00EF145F /* Frost */,
 			);
-			name = Ice;
+			name = Frost;
 			packageProductDependencies = (
 				175061902B1543DD003144CD /* LaunchAtLogin */,
 				1787C4262B16890B002F50DF /* AXSwift */,
@@ -92,8 +92,8 @@
 				17F71BB42B880B4500905CBA /* CompactSlider */,
 				7127A9FE2C4886D100D99DEF /* IfritStatic */,
 			);
-			productName = Ice;
-			productReference = 7166832A2A767E6A006ABF84 /* Ice.app */;
+			productName = Frost;
+			productReference = 7166832A2A767E6A006ABF84 /* Frost.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -111,7 +111,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 716683252A767E6A006ABF84 /* Build configuration list for PBXProject "Ice" */;
+			buildConfigurationList = 716683252A767E6A006ABF84 /* Build configuration list for PBXProject "Frost" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -131,7 +131,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				716683292A767E6A006ABF84 /* Ice */,
+				716683292A767E6A006ABF84 /* Frost */,
 			);
 		};
 /* End PBXProject section */
@@ -305,7 +305,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Ice/Ice.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Frost/Frost.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -316,7 +316,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Ice/Info.plist;
+				INFOPLIST_FILE = Frost/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 VChun";
@@ -337,7 +337,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Ice/Ice.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Frost/Frost.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -348,7 +348,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Ice/Info.plist;
+				INFOPLIST_FILE = Frost/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 VChun";
@@ -367,7 +367,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		716683252A767E6A006ABF84 /* Build configuration list for PBXProject "Ice" */ = {
+		716683252A767E6A006ABF84 /* Build configuration list for PBXProject "Frost" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				716683372A767E6B006ABF84 /* Debug */,
@@ -376,7 +376,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		716683392A767E6B006ABF84 /* Build configuration list for PBXNativeTarget "Ice" */ = {
+		716683392A767E6B006ABF84 /* Build configuration list for PBXNativeTarget "Frost" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7166833A2A767E6B006ABF84 /* Debug */,
