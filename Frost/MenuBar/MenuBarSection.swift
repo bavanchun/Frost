@@ -49,17 +49,17 @@ final class MenuBarSection {
     /// is outside of the menu bar.
     private var rehideMonitor: UniversalEventMonitor?
 
-    /// A Boolean value that indicates whether the Ice Bar should be used.
+    /// A Boolean value that indicates whether the Frost Bar should be used.
     private var useFrostBar: Bool {
         appState?.settingsManager.generalSettingsManager.useFrostBar ?? false
     }
 
-    /// A weak reference to the menu bar manager's Ice Bar panel.
+    /// A weak reference to the menu bar manager's Frost Bar panel.
     private weak var frostBarPanel: FrostBarPanel? {
         appState?.menuBarManager.frostBarPanel
     }
 
-    /// The best screen to show the Ice Bar on.
+    /// The best screen to show the Frost Bar on.
     private weak var screenForFrostBar: NSScreen? {
         guard let appState else {
             return nil

@@ -34,7 +34,7 @@ final class MenuBarManager: ObservableObject {
     /// The managed sections in the menu bar.
     private(set) var sections = [MenuBarSection]()
 
-    /// The panel that contains the Ice Bar interface.
+    /// The panel that contains the Frost Bar interface.
     let frostBarPanel: FrostBarPanel
 
     /// The panel that contains the menu bar search interface.
@@ -327,7 +327,7 @@ final class MenuBarManager: ObservableObject {
 
     /// Shows the right-click menu.
     func showRightClickMenu(at point: CGPoint) {
-        let menu = NSMenu(title: "Ice")
+        let menu = NSMenu(title: "Frost")
 
         let editItem = NSMenuItem(
             title: "Edit Menu Bar Appearance…",
@@ -340,7 +340,7 @@ final class MenuBarManager: ObservableObject {
         menu.addItem(.separator())
 
         let settingsItem = NSMenuItem(
-            title: "Ice Settings…",
+            title: "Frost Settings…",
             action: #selector(AppDelegate.openSettingsWindow),
             keyEquivalent: ","
         )

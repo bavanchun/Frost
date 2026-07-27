@@ -52,7 +52,7 @@ final class HotkeyRegistry {
         }
     }
 
-    private let signature = OSType(1231250720) // OSType for Ice
+    private let signature = OSType(1181904755) // OSType for 'Fros'
 
     private var eventHandlerRef: EventHandlerRef?
 

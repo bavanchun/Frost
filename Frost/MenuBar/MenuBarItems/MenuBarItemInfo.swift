@@ -36,7 +36,7 @@ extension MenuBarItemInfo {
     /// An array of items that can be moved, but cannot be hidden.
     static let nonHideableItems = [audioVideoModule, faceTime, musicRecognition]
 
-    /// Information for an item that represents the Ice icon, a.k.a. the
+    /// Information for an item that represents the Frost icon, a.k.a. the
     /// control item for the visible section.
     static let frostIcon = MenuBarItemInfo(
         namespace: .frost,
@@ -203,7 +203,7 @@ extension MenuBarItemInfo {
 
 // MARK: MenuBarItemInfo.Namespace Constants
 extension MenuBarItemInfo.Namespace {
-    /// The namespace for menu bar items owned by Ice.
+    /// The namespace for menu bar items owned by Frost.
     static let frost = Self(Constants.bundleIdentifier)
 
     /// The namespace for menu bar items owned by Control Center.

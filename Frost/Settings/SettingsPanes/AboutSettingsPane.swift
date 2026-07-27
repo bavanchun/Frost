@@ -20,16 +20,11 @@ struct AboutSettingsPane: View {
 
     private var contributeURL: URL {
         // swiftlint:disable:next force_unwrapping
-        URL(string: "https://github.com/bavanchun/Ice-vc")!
+        URL(string: "https://github.com/bavanchun/Frost")!
     }
 
     private var issuesURL: URL {
         contributeURL.appendingPathComponent("issues")
-    }
-
-    private var donateURL: URL {
-        // swiftlint:disable:next force_unwrapping
-        URL(string: "https://icemenubar.app/Donate")!
     }
 
     private var lastUpdateCheckString: String {
@@ -78,7 +73,7 @@ struct AboutSettingsPane: View {
                 }
 
                 VStack(alignment: .leading) {
-                    Text("Ice")
+                    Text("Frost")
                         .font(.system(size: 72, weight: .medium))
                         .foregroundStyle(.primary)
 
@@ -137,7 +132,7 @@ struct AboutSettingsPane: View {
     @ViewBuilder
     private var bottomBar: some View {
         HStack {
-            Button("Quit Ice") {
+            Button("Quit Frost") {
                 NSApp.terminate(nil)
             }
             Spacer()
@@ -149,9 +144,6 @@ struct AboutSettingsPane: View {
             }
             Button("Report a Bug") {
                 openURL(issuesURL)
-            }
-            Button("Support Ice", systemImage: "heart.circle.fill") {
-                openURL(donateURL)
             }
         }
         .padding(8)

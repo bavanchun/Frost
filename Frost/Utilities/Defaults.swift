@@ -140,10 +140,10 @@ extension Defaults {
 
         // MARK: General Settings
 
-        case showFrostIcon = "ShowIceIcon"
-        case frostIcon = "IceIcon"
-        case customFrostIconIsTemplate = "CustomIceIconIsTemplate"
-        case useFrostBar = "UseIceBar"
+        case showFrostIcon = "ShowFrostIcon"
+        case frostIcon = "FrostIcon"
+        case customFrostIconIsTemplate = "CustomFrostIconIsTemplate"
+        case useFrostBar = "UseFrostBar"
         case showOnClick = "ShowOnClick"
         case showOnHover = "ShowOnHover"
         case showOnScroll = "ShowOnScroll"
@@ -171,10 +171,10 @@ extension Defaults {
 
         case menuBarAppearanceConfigurationV2 = "MenuBarAppearanceConfigurationV2"
 
-        // MARK: Ice Bar Settings
+        // MARK: Frost Bar Settings
 
-        case frostBarLocation = "IceBarLocation"
-        case frostBarPinnedLocation = "IceBarPinnedLocation"
+        case frostBarLocation = "FrostBarLocation"
+        case frostBarPinnedLocation = "FrostBarPinnedLocation"
 
         // MARK: Migration
 

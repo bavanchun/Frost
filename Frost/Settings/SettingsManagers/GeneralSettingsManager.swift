@@ -8,7 +8,7 @@ import Foundation
 
 @MainActor
 final class GeneralSettingsManager: ObservableObject {
-    /// A Boolean value that indicates whether the Ice icon
+    /// A Boolean value that indicates whether the Frost icon
     /// should be shown.
     @Published var showFrostIcon = true
 
@@ -16,10 +16,10 @@ final class GeneralSettingsManager: ObservableObject {
     /// for when items are visible or hidden.
     @Published var frostIcon: ControlItemImageSet = .defaultFrostIcon
 
-    /// The last user-selected custom Ice icon.
+    /// The last user-selected custom Frost icon.
     @Published var lastCustomFrostIcon: ControlItemImageSet?
 
-    /// A Boolean value that indicates whether custom Ice icons
+    /// A Boolean value that indicates whether custom Frost icons
     /// should be rendered as template images.
     @Published var customFrostIconIsTemplate = false
 
@@ -27,7 +27,7 @@ final class GeneralSettingsManager: ObservableObject {
     /// in a separate bar below the menu bar.
     @Published var useFrostBar = false
 
-    /// The location where the Ice Bar appears.
+    /// The location where the Frost Bar appears.
     @Published var frostBarLocation: FrostBarLocation = .dynamic
 
     /// A Boolean value that indicates whether the hidden section
@@ -106,7 +106,7 @@ final class GeneralSettingsManager: ObservableObject {
             do {
                 frostIcon = try decoder.decode(ControlItemImageSet.self, from: data)
             } catch {
-                Logger.generalSettingsManager.error("Error decoding Ice icon: \(error)")
+                Logger.generalSettingsManager.error("Error decoding Frost icon: \(error)")
             }
             if case .custom = frostIcon.name {
                 lastCustomFrostIcon = frostIcon
@@ -137,7 +137,7 @@ final class GeneralSettingsManager: ObservableObject {
                     let data = try encoder.encode(frostIcon)
                     Defaults.set(data, forKey: .frostIcon)
                 } catch {
-                    Logger.generalSettingsManager.error("Error encoding Ice icon: \(error)")
+                    Logger.generalSettingsManager.error("Error encoding Frost icon: \(error)")
                 }
             }
             .store(in: &c)

@@ -11,7 +11,7 @@ enum ScreenCapture {
     /// Returns a Boolean value that indicates whether the app has been granted screen capture permissions.
     static func checkPermissions() -> Bool {
         for item in MenuBarItem.getMenuBarItems(onScreenOnly: false, activeSpaceOnly: true) {
-            // Don't check items owned by Ice.
+            // Don't check items owned by Frost.
             if item.owningApplication == .current {
                 continue
             }

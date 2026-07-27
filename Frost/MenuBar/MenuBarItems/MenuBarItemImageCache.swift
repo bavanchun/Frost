@@ -231,15 +231,15 @@ final class MenuBarItemImageCache: ObservableObject {
 
         if !isFrostBarPresented && !isSearchPresented {
             guard await appState.navigationState.isAppFrontmost else {
-                logSkippingCache(reason: "Ice Bar not visible, app not frontmost")
+                logSkippingCache(reason: "Frost Bar not visible, app not frontmost")
                 return
             }
             guard await appState.navigationState.isSettingsPresented else {
-                logSkippingCache(reason: "Ice Bar not visible, Settings not visible")
+                logSkippingCache(reason: "Frost Bar not visible, Settings not visible")
                 return
             }
             guard case .menuBarLayout = await appState.navigationState.settingsNavigationIdentifier else {
-                logSkippingCache(reason: "Ice Bar not visible, Settings visible but not on Menu Bar Layout")
+                logSkippingCache(reason: "Frost Bar not visible, Settings visible but not on Menu Bar Layout")
                 return
             }
         }

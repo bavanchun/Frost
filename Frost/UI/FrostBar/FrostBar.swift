@@ -25,7 +25,7 @@ final class FrostBarPanel: NSPanel {
             defer: false
         )
         self.appState = appState
-        self.title = "Ice Bar"
+        self.title = "Frost Bar"
         self.titlebarAppearsTransparent = true
         self.isMovableByWindowBackground = true
         self.allowsToolTipsWhenApplicationIsInactive = true
@@ -64,7 +64,7 @@ final class FrostBarPanel: NSPanel {
                     guard
                         let self,
                         let appState,
-                        // Only continue if the menu bar is automatically hidden, as Ice
+                        // Only continue if the menu bar is automatically hidden, as Frost
                         // can't currently display its menu bar items.
                         appState.menuBarManager.isMenuBarHiddenBySystemUserDefaults,
                         let info = window.flatMap({ WindowInfo(windowID: CGWindowID($0.windowNumber)) }),
@@ -310,21 +310,21 @@ private struct FrostBarContentView: View {
     private var content: some View {
         if !ScreenCapture.cachedCheckPermissions() {
             HStack {
-                Text("The Ice Bar requires screen recording permissions.")
+                Text("The Frost Bar requires screen recording permissions.")
 
                 Button {
                     closePanel()
                     appState.navigationState.settingsNavigationIdentifier = .advanced
                     appState.appDelegate?.openSettingsWindow()
                 } label: {
-                    Text("Open Ice Settings")
+                    Text("Open Frost Settings")
                 }
                 .buttonStyle(.plain)
                 .foregroundStyle(.link)
             }
             .padding(.horizontal, 10)
         } else if menuBarManager.isMenuBarHiddenBySystemUserDefaults {
-            Text("Ice cannot display menu bar items for automatically hidden menu bars")
+            Text("Frost cannot display menu bar items for automatically hidden menu bars")
                 .padding(.horizontal, 10)
         } else if imageCache.cacheFailed(for: section) {
             Text("Unable to display menu bar items")

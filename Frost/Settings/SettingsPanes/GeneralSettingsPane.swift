@@ -111,15 +111,15 @@ struct GeneralSettingsPane: View {
 
     @ViewBuilder
     private var frostIconOptions: some View {
-        Toggle("Show Ice icon", isOn: manager.bindings.showFrostIcon)
+        Toggle("Show Frost icon", isOn: manager.bindings.showFrostIcon)
             .annotation {
                 if !manager.showFrostIcon {
-                    Text("You can still access Ice's settings by right-clicking an empty area in the menu bar")
+                    Text("You can still access Frost's settings by right-clicking an empty area in the menu bar")
                 }
             }
         if manager.showFrostIcon {
-            FrostMenu("Ice icon") {
-                Picker("Ice icon", selection: manager.bindings.frostIcon) {
+            FrostMenu("Frost icon") {
+                Picker("Frost icon", selection: manager.bindings.frostIcon) {
                     ForEach(ControlItemImageSet.userSelectableFrostIcons) { imageSet in
                         Button {
                             manager.frostIcon = imageSet
@@ -183,7 +183,7 @@ struct GeneralSettingsPane: View {
 
     @ViewBuilder
     private var useFrostBar: some View {
-        Toggle("Use Ice Bar", isOn: manager.bindings.useFrostBar)
+        Toggle("Use Frost Bar", isOn: manager.bindings.useFrostBar)
             .annotation("Show hidden menu bar items in a separate bar below the menu bar")
     }
 
@@ -197,11 +197,11 @@ struct GeneralSettingsPane: View {
         .annotation {
             switch manager.frostBarLocation {
             case .dynamic:
-                Text("The Ice Bar's location changes based on context")
+                Text("The Frost Bar's location changes based on context")
             case .mousePointer:
-                Text("The Ice Bar is centered below the mouse pointer")
+                Text("The Frost Bar is centered below the mouse pointer")
             case .frostIcon:
-                Text("The Ice Bar is centered below the Ice icon")
+                Text("The Frost Bar is centered below the Frost icon")
             }
         }
     }

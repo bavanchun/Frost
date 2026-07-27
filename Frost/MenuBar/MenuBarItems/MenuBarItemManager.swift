@@ -21,7 +21,7 @@ final class MenuBarItemManager: ObservableObject {
             }
         }
 
-        /// The cached menu bar items managed by Ice.
+        /// The cached menu bar items managed by Frost.
         var managedItems: [MenuBarItem] {
             MenuBarSection.Name.allCases.reduce(into: []) { result, section in
                 result.append(contentsOf: managedItems(for: section))
@@ -33,7 +33,7 @@ final class MenuBarItemManager: ObservableObject {
             items.removeAll()
         }
 
-        /// Returns the cached menu bar items managed by Ice for the given section.
+        /// Returns the cached menu bar items managed by Frost for the given section.
         func managedItems(for section: MenuBarSection.Name) -> [MenuBarItem] {
             self[section].filter { item in
                 // Filter out items that can't be hidden.
@@ -42,7 +42,7 @@ final class MenuBarItemManager: ObservableObject {
                 }
 
                 if item.owningApplication == .current {
-                    // Ice icon is the only item owned by Ice that should be included.
+                    // Frost icon is the only item owned by Frost that should be included.
                     guard item.title == ControlItem.Identifier.frostIcon.rawValue else {
                         return false
                     }

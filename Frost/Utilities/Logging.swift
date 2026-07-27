@@ -5,12 +5,12 @@
 
 import OSLog
 
-/// A type that encapsulates logging behavior for Ice.
+/// A type that encapsulates logging behavior for Frost.
 struct Logger {
     /// The unified logger at the base of this logger.
     private let base: os.Logger
 
-    /// Creates a logger for Ice using the specified category.
+    /// Creates a logger for Frost using the specified category.
     init(category: String) {
         self.base = os.Logger(subsystem: Constants.bundleIdentifier, category: category)
     }
