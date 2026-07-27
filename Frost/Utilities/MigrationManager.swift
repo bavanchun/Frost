@@ -331,12 +331,12 @@ extension MigrationManager {
     private func migrateFrostIcon1_1_0() throws {
         guard
             let data = Defaults.data(forKey: .frostIcon),
-            (try? decoder.decode(ControlItemImageSet.self, from: data)) == nil,
-            let snowflake = ControlItemImageSet.userSelectableFrostIcons.first(where: { $0.name == .snowflake })
+            (try? decoder.decode(ControlItemImageSet.self, from: data)) == nil
         else {
             return
         }
-        Defaults.set(try encoder.encode(snowflake), forKey: .frostIcon)
+        Defaults.set(try encoder.encode(ControlItemImageSet.snowflakeFrostIcon), forKey: .frostIcon)
+        Logger.migration.info("Replaced an unreadable Frost icon with the snowflake icon")
     }
 }
 
