@@ -633,6 +633,7 @@ the "copyright" line and a pointer to where the full notice is found.
 
     Ice - A powerful menu bar manager for macOS
     Copyright (C) 2024 Jordan Baird
+    Frost (fork of Ice) Copyright (C) 2026 VChun
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -653,6 +654,7 @@ Also add information on how to contact you by electronic and paper mail.
 notice like this when it starts in an interactive mode:
 
     Ice Copyright (C) 2024 Jordan Baird
+    Frost (fork of Ice) Copyright (C) 2026 VChun
     This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.
     This is free software, and you are welcome to redistribute it
     under certain conditions; type `show c' for details.
