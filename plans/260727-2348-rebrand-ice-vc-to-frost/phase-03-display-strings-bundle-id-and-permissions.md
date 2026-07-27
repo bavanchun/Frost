@@ -1,7 +1,7 @@
 ---
 phase: 3
 title: "Display strings, bundle ID, and permissions"
-status: pending
+status: completed
 priority: P1
 effort: "1.5h"
 dependencies: [2]
@@ -75,12 +75,12 @@ Sparkle (`Frost/Info.plist`): `SUFeedURL` currently points to `https://github.co
 
 ## Success Criteria
 
-- [ ] Zero remaining `"Ice"` string literals in `Frost/**/*.swift` (verified by grep, not just the 5 known sites — in case Phase 1/2 surfaced more)
-- [ ] `PRODUCT_BUNDLE_IDENTIFIER = com.vchun.Frost;` in both Debug and Release configs
-- [ ] `SUFeedURL` points to `bavanchun/Frost` releases
-- [ ] Built app's `Info.plist` shows `CFBundleIdentifier = com.vchun.Frost` and `CFBundleName = Frost`
-- [ ] Old `/Applications/Ice.app` removed
-- [ ] `xcodebuild build` still exits 0 after all edits
+- [x] Zero remaining `"Ice"` string literals in `Frost/**/*.swift` (verified by grep, not just the 5 known sites — in case Phase 1/2 surfaced more)
+- [x] `PRODUCT_BUNDLE_IDENTIFIER = com.vchun.Frost;` in both Debug and Release configs
+- [x] `SUFeedURL` points to `bavanchun/Frost` releases
+- [x] Built app's `Info.plist` shows `CFBundleIdentifier = com.vchun.Frost` and `CFBundleName = Frost`
+- [x] Old `/Applications/Ice.app` removed
+- [x] `xcodebuild build` still exits 0 after all edits
 
 ## Risk Assessment
 

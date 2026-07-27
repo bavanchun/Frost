@@ -1,7 +1,7 @@
 ---
 phase: 1
 title: "Xcode project, target, scheme, and folder rename"
-status: pending
+status: completed
 priority: P1
 effort: "2h"
 dependencies: []
@@ -68,12 +68,12 @@ Separately, the project also has "Ice" baked into: the `.xcodeproj` bundle name 
 
 ## Success Criteria
 
-- [ ] `git mv` used for every rename (verify with `git log --follow` on a moved file still shows pre-rename history)
-- [ ] `Frost.xcodeproj` exists, `Ice.xcodeproj` does not
-- [ ] `project.pbxproj` has zero remaining `path = Ice;` or `name = Ice;`
-- [ ] `Frost.xcscheme` has zero remaining `"Ice.app"` or `BlueprintName = "Ice"`
-- [ ] `xcodebuild build -scheme Frost -configuration Release CODE_SIGNING_ALLOWED=NO` exits 0 and produces `Frost.app`
-- [ ] No Swift symbol names touched yet (deferred to Phase 2)
+- [x] `git mv` used for every rename (verify with `git log --follow` on a moved file still shows pre-rename history)
+- [x] `Frost.xcodeproj` exists, `Ice.xcodeproj` does not
+- [x] `project.pbxproj` has zero remaining `path = Ice;` or `name = Ice;`
+- [x] `Frost.xcscheme` has zero remaining `"Ice.app"` or `BlueprintName = "Ice"`
+- [x] `xcodebuild build -scheme Frost -configuration Release CODE_SIGNING_ALLOWED=NO` exits 0 and produces `Frost.app`
+- [x] No Swift symbol names touched yet (deferred to Phase 2)
 
 ## Risk Assessment
 

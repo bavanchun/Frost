@@ -1,7 +1,7 @@
 ---
 phase: 2
 title: "Swift symbol and file rename"
-status: pending
+status: completed
 priority: P1
 effort: "2h"
 dependencies: [1]
@@ -104,12 +104,12 @@ Separately, `IceCubeStroke`/`IceCubeFill` are asset catalog image names (`.catal
 
 ## Success Criteria
 
-- [ ] All 11 files renamed via `git mv` (history preserved)
-- [ ] `FrostBar/` and `FrostUI/` folders exist; `IceBar`/`IceUI` folders do not
-- [ ] Zero remaining word-boundary matches for any of the 18 old symbol names in `.swift` files
-- [ ] Zero remaining `//  Ice` file-header comments across all 116 `.swift` files
-- [ ] `IceCube`/`IceCubeStroke`/`IceCubeFill` deliberately left untouched (verify still present — confirms nothing over-matched into the asset layer)
-- [ ] `xcodebuild build -scheme Frost -configuration Release CODE_SIGNING_ALLOWED=NO` exits 0
+- [x] All 11 files renamed via `git mv` (history preserved)
+- [x] `FrostBar/` and `FrostUI/` folders exist; `IceBar`/`IceUI` folders do not
+- [x] Zero remaining word-boundary matches for any of the 18 old symbol names in `.swift` files
+- [x] Zero remaining `//  Ice` file-header comments across all 116 `.swift` files
+- [x] `IceCube`/`IceCubeStroke`/`IceCubeFill` deliberately left untouched (verify still present — confirms nothing over-matched into the asset layer)
+- [x] `xcodebuild build -scheme Frost -configuration Release CODE_SIGNING_ALLOWED=NO` exits 0
 
 ## Risk Assessment
 

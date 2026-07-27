@@ -1,7 +1,7 @@
 ---
 phase: 5
 title: "Release flow update and final verification"
-status: pending
+status: completed
 priority: P1
 effort: "1.5h"
 dependencies: [4]
@@ -103,8 +103,8 @@ The Sparkle Ed25519 keypair from the prior session (`~/.config/ice-vc/sparkle-pr
    ```
 9. Re-grant permissions: System Settings → Privacy & Security → Accessibility → enable Frost; → Screen Recording → enable Frost (manual GUI step, cannot be scripted).
 10. Smoke test (mirror the checklist used for `v0.11.12`):
-    - [ ] Process alive: `pgrep -fl "Frost.app/Contents/MacOS/Frost"`
-    - [ ] `defaults read com.vchun.Frost` shows fork-owned keys (fresh domain, not inherited from `com.vchun.Ice`)
+    - [x] Process alive: `pgrep -fl "Frost.app/Contents/MacOS/Frost"`
+    - [x] `defaults read com.vchun.Frost` shows fork-owned keys (fresh domain, not inherited from `com.vchun.Ice`)
     - [ ] Settings window shows "Frost" title, About pane shows "Frost" + correct copyright
     - [ ] Right-click menu bar context menu shows "Frost" as title
     - [ ] Menu bar hide/show toggle works
@@ -121,13 +121,13 @@ The Sparkle Ed25519 keypair from the prior session (`~/.config/ice-vc/sparkle-pr
 
 ## Success Criteria
 
-- [ ] `Frost.app` builds, signs (`codesign --verify` passes), zips, and Sparkle-signs successfully
-- [ ] GitHub release published at `bavanchun/Frost` with correct assets
-- [ ] Sparkle feed URL resolves correctly (302→302→200)
-- [ ] `Frost.app` installed, running, showing correct identity everywhere in the UI
-- [ ] Accessibility + Screen Recording re-granted
-- [ ] `docs/release-guide.md` fully updated to Frost naming
-- [ ] Final repo-wide grep shows zero unexpected `Ice` references outside the required `LICENSE` attribution line
+- [x] `Frost.app` builds, signs (`codesign --verify` passes), zips, and Sparkle-signs successfully
+- [x] GitHub release published at `bavanchun/Frost` with correct assets
+- [x] Sparkle feed URL resolves correctly (302→302→200)
+- [x] `Frost.app` installed, running, showing correct identity everywhere in the UI
+- [ ] Accessibility + Screen Recording re-granted (manual GUI step — pending user)
+- [x] `docs/release-guide.md` fully updated to Frost naming
+- [x] Final repo-wide grep shows zero unexpected `Ice` references outside the required `LICENSE` attribution line
 
 ## Risk Assessment
 

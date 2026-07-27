@@ -1,7 +1,7 @@
 ---
 phase: 4
 title: "README, LICENSE attribution, and GitHub repo rename"
-status: pending
+status: completed
 priority: P1
 effort: "1h"
 dependencies: [3]
@@ -90,11 +90,11 @@ Frost (fork of Ice) Copyright (C) 2026 VChun
 
 ## Success Criteria
 
-- [ ] `README.md` has zero links to `jordanbaird/Ice/releases`, `icemenubar.app`, `github.com/sponsors/jordanbaird`, or `buymeacoffee.com/jordanbaird`
-- [ ] `README.md` has a Credits section correctly attributing upstream Ice
-- [ ] `LICENSE` still contains BOTH original notices verbatim (line ~635 and line ~655), each with a new Frost fork copyright line directly beneath it
-- [ ] GitHub repo is `bavanchun/Frost`; old `bavanchun/Ice-vc` URL redirects to it
-- [ ] `git remote -v` in the local clone resolves to the renamed repo
+- [x] `README.md` has zero links to `jordanbaird/Ice/releases`, `icemenubar.app`, `github.com/sponsors/jordanbaird`, or `buymeacoffee.com/jordanbaird`
+- [x] `README.md` has a Credits section correctly attributing upstream Ice
+- [x] `LICENSE` still contains BOTH original notices verbatim (line ~635 and line ~655), each with a new Frost fork copyright line directly beneath it
+- [x] GitHub repo is `bavanchun/Frost`; old `bavanchun/Ice-vc` URL redirects to it
+- [x] `git remote -v` in the local clone resolves to the renamed repo
 
 ## Risk Assessment
 

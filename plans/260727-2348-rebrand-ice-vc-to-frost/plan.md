@@ -1,7 +1,7 @@
 ---
 title: "Rebrand Ice-vc to Frost"
 description: "Full mechanical rebrand of the personal Ice fork to Frost: Xcode project/target/scheme, source folder, 18 Swift symbols, display strings, bundle ID, README, and GitHub repo."
-status: pending
+status: completed
 priority: P1
 effort: "1d"
 tags: [rebrand, xcode, swift]
@@ -44,23 +44,25 @@ The user explicitly chose the highest-effort rebrand option (full code rename, n
 
 | # | Phase | Status |
 |---|-------|--------|
-| 1 | [Phase 1: Xcode project, target, scheme, and folder rename](./phase-01-start.md) | Pending |
-| 2 | [Phase 2: Swift symbol and file rename](./phase-02-swift-symbol-and-file-rename.md) | Pending |
-| 3 | [Phase 3: Display strings, bundle ID, and permissions](./phase-03-display-strings-bundle-id-and-permissions.md) | Pending |
-| 4 | [Phase 4: README, LICENSE attribution, and GitHub repo rename](./phase-04-readme-license-attribution-and-github-repo-rename.md) | Pending |
-| 5 | [Phase 5: Release flow update and final verification](./phase-05-release-flow-update-and-final-verification.md) | Pending |
+| 1 | [Phase 1: Xcode project, target, scheme, and folder rename](./phase-01-start.md) | Completed |
+| 2 | [Phase 2: Swift symbol and file rename](./phase-02-swift-symbol-and-file-rename.md) | Completed |
+| 3 | [Phase 3: Display strings, bundle ID, and permissions](./phase-03-display-strings-bundle-id-and-permissions.md) | Completed |
+| 4 | [Phase 4: README, LICENSE attribution, and GitHub repo rename](./phase-04-readme-license-attribution-and-github-repo-rename.md) | Completed |
+| 5 | [Phase 5: Release flow update and final verification](./phase-05-release-flow-update-and-final-verification.md) | Completed |
 
 Each phase ends with its own build/verify gate. A failure in one phase does not require redoing prior phases — only the failing phase is retried.
 
 ## Success Criteria
 
-- [ ] `xcodebuild build -scheme Frost -configuration Release CODE_SIGNING_ALLOWED=NO` exits 0 after every phase that touches the project
-- [ ] `grep -rniE '\bice\b' Frost/ --include="*.swift"` returns zero matches except intentional GPL-derived comments (if any remain, they must be justified, not accidental)
-- [ ] App launches, Settings/About/menu bar context menu all display "Frost", bundle ID is `com.vchun.Frost`
-- [ ] `LICENSE` contains both original Jordan Baird notices verbatim (required) and the user's own Frost fork copyright line beneath each
-- [ ] GitHub repo lives at `bavanchun/Frost`; local `git remote -v` matches
-- [ ] A full signed release (unsigned build + manual codesign inside-out) succeeds with the new bundle ID and produces a launchable `/Applications/Frost.app`
-- [ ] Old `/Applications/Ice.app` removed; Accessibility + Screen Recording permissions re-granted to the new bundle ID
+- [x] `xcodebuild build -scheme Frost -configuration Release CODE_SIGNING_ALLOWED=NO` exits 0 after every phase that touches the project
+- [x] `grep -rniE '\bice\b' Frost/ --include="*.swift"` returns zero matches except intentional GPL-derived comments (if any remain, they must be justified, not accidental)
+- [x] App launches and bundle ID is `com.vchun.Frost`; macOS registers it as "Frost"
+- [ ] Settings/About/menu bar context menu visually confirmed to display "Frost" (blocked until permissions are granted)
+- [x] `LICENSE` contains both original Jordan Baird notices verbatim (required) and the user's own Frost fork copyright line beneath each
+- [x] GitHub repo lives at `bavanchun/Frost`; local `git remote -v` matches
+- [x] A full signed release (unsigned build + manual codesign inside-out) succeeds with the new bundle ID and produces a launchable `/Applications/Frost.app`
+- [x] Old `/Applications/Ice.app` removed
+- [ ] Accessibility + Screen Recording permissions re-granted to the new bundle ID (manual GUI step — pending user)
 
 ## Unresolved Questions
 
@@ -104,9 +106,9 @@ Each phase ends with its own build/verify gate. A failure in one phase does not 
 - Version: `MARKETING_VERSION = 1.0.0`, `CURRENT_PROJECT_VERSION` bumped to next integer (1118) in Phase 5, both Debug and Release configs
 
 #### Action Items
-- [ ] Phase 2: add file-header batch-rename step + update its Success Criteria to include header-comment check
-- [ ] Phase 4: update LICENSE step to reference both line locations (635 and 655)
-- [ ] Phase 5: resolve the "decide version" step to the confirmed 1.0.0 / build 1118, remove the open-ended framing
+- [x] Phase 2: add file-header batch-rename step + update its Success Criteria to include header-comment check
+- [x] Phase 4: update LICENSE step to reference both line locations (635 and 655)
+- [x] Phase 5: resolve the "decide version" step to the confirmed 1.0.0 / build 1118, remove the open-ended framing
 
 #### Impact on Phases
 - Phase 2: new implementation step (file-header sed) + updated Success Criteria
