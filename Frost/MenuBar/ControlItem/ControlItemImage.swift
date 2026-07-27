@@ -1,6 +1,6 @@
 //
 //  ControlItemImage.swift
-//  Ice
+//  Frost
 //
 
 import Cocoa
@@ -41,7 +41,7 @@ enum ControlItemImage: Codable, Hashable {
         case .data(let data):
             let image = NSImage(data: data)
             let generalSettingsManager = appState.settingsManager.generalSettingsManager
-            image?.isTemplate = generalSettingsManager.customIceIconIsTemplate
+            image?.isTemplate = generalSettingsManager.customFrostIconIsTemplate
             return image
         }
     }

@@ -1,6 +1,6 @@
 //
 //  MouseCursor.swift
-//  Ice
+//  Frost
 //
 
 import CoreGraphics

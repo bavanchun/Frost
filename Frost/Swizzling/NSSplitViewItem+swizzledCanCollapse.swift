@@ -1,6 +1,6 @@
 //
 //  NSSplitViewItem+swizzledCanCollapse.swift
-//  Ice
+//  Frost
 //
 
 import Cocoa

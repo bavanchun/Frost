@@ -1,6 +1,6 @@
 //
 //  EventManager.swift
-//  Ice
+//  Frost
 //
 
 import Cocoa
@@ -193,7 +193,7 @@ extension EventManager {
         }
 
         // Make sure clicking the Ice Bar doesn't trigger rehide.
-        guard event.window !== appState.menuBarManager.iceBarPanel else {
+        guard event.window !== appState.menuBarManager.frostBarPanel else {
             return
         }
 
@@ -271,7 +271,7 @@ extension EventManager {
         guard
             let appState,
             appState.settingsManager.generalSettingsManager.showOnHover,
-            !appState.settingsManager.generalSettingsManager.useIceBar,
+            !appState.settingsManager.generalSettingsManager.useFrostBar,
             isMouseInsideMenuBar
         else {
             return
@@ -280,7 +280,7 @@ extension EventManager {
         if isMouseInsideMenuBarItem {
             switch event.type {
             case .leftMouseDown:
-                if appState.menuBarManager.sections.contains(where: { !$0.isHidden }) || isMouseInsideIceIcon {
+                if appState.menuBarManager.sections.contains(where: { !$0.isHidden }) || isMouseInsideFrostIcon {
                     // We have a left click that is inside the menu bar while at least one
                     // section is visible or the mouse is inside the Ice icon.
                     appState.preventShowOnHover()
@@ -379,7 +379,7 @@ extension EventManager {
             } else {
                 guard
                     !self.isMouseInsideMenuBar,
-                    !self.isMouseInsideIceBar
+                    !self.isMouseInsideFrostBar
                 else {
                     return
                 }
@@ -387,7 +387,7 @@ extension EventManager {
                 // Make sure the mouse is still outside.
                 guard
                     !self.isMouseInsideMenuBar,
-                    !self.isMouseInsideIceBar
+                    !self.isMouseInsideFrostBar
                 else {
                     return
                 }
@@ -521,14 +521,14 @@ extension EventManager {
 
     /// A Boolean value that indicates whether the mouse pointer is within
     /// the bounds of the Ice Bar panel.
-    var isMouseInsideIceBar: Bool {
+    var isMouseInsideFrostBar: Bool {
         guard
             let appState,
             let mouseLocation = MouseCursor.locationAppKit
         else {
             return false
         }
-        let panel = appState.menuBarManager.iceBarPanel
+        let panel = appState.menuBarManager.frostBarPanel
         // Pad the frame to be more forgiving if the user accidentally
         // moves their mouse outside of the Ice Bar.
         let paddedFrame = panel.frame.insetBy(dx: -10, dy: -10)
@@ -537,16 +537,16 @@ extension EventManager {
 
     /// A Boolean value that indicates whether the mouse pointer is within
     /// the bounds of the Ice icon.
-    var isMouseInsideIceIcon: Bool {
+    var isMouseInsideFrostIcon: Bool {
         guard
             let appState,
             let visibleSection = appState.menuBarManager.section(withName: .visible),
-            let iceIconFrame = visibleSection.controlItem.windowFrame,
+            let frostIconFrame = visibleSection.controlItem.windowFrame,
             let mouseLocation = MouseCursor.locationAppKit
         else {
             return false
         }
-        return iceIconFrame.contains(mouseLocation)
+        return frostIconFrame.contains(mouseLocation)
     }
 }
 

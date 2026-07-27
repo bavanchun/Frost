@@ -1,6 +1,6 @@
 //
 //  KeyCombination.swift
-//  Ice
+//  Frost
 //
 
 import Carbon.HIToolbox

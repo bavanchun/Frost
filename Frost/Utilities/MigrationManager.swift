@@ -1,6 +1,6 @@
 //
 //  MigrationManager.swift
-//  Ice
+//  Frost
 //
 
 import Cocoa
@@ -142,7 +142,7 @@ extension MigrationManager {
 
             let identifier = switch name {
             case .visible:
-                ControlItem.Identifier.iceIcon.deprecatedRawValue
+                ControlItem.Identifier.frostIcon.deprecatedRawValue
             case .hidden:
                 ControlItem.Identifier.hidden.deprecatedRawValue
             case .alwaysHidden:
@@ -393,7 +393,7 @@ extension MigrationManager {
 private extension ControlItem.Identifier {
     var deprecatedRawValue: String {
         switch self {
-        case .iceIcon: "IceIcon"
+        case .frostIcon: "IceIcon"
         case .hidden: "HItem"
         case .alwaysHidden: "AHItem"
         }

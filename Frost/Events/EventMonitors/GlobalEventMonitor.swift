@@ -1,6 +1,6 @@
 //
 //  GlobalEventMonitor.swift
-//  Ice
+//  Frost
 //
 
 import Cocoa

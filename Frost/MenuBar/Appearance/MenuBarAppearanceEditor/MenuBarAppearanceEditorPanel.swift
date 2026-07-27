@@ -1,6 +1,6 @@
 //
 //  MenuBarAppearanceEditorPanel.swift
-//  Ice
+//  Frost
 //
 
 import Combine

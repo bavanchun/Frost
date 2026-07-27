@@ -1,6 +1,6 @@
 //
 //  HotkeyRecorderModel.swift
-//  Ice
+//  Frost
 //
 
 import Combine

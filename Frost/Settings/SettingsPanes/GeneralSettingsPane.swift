@@ -1,6 +1,6 @@
 //
 //  GeneralSettingsPane.swift
-//  Ice
+//  Frost
 //
 
 import LaunchAtLogin
@@ -8,7 +8,7 @@ import SwiftUI
 
 struct GeneralSettingsPane: View {
     @EnvironmentObject var appState: AppState
-    @State private var isImportingCustomIceIcon = false
+    @State private var isImportingCustomFrostIcon = false
     @State private var isPresentingError = false
     @State private var presentedError: LocalizedErrorWrapper?
     @State private var isApplyingOffset = false
@@ -53,25 +53,25 @@ struct GeneralSettingsPane: View {
     }
 
     var body: some View {
-        IceForm {
-            IceSection {
+        FrostForm {
+            FrostSection {
                 launchAtLogin
             }
-            IceSection {
-                iceIconOptions
+            FrostSection {
+                frostIconOptions
             }
-            IceSection {
-                iceBarOptions
+            FrostSection {
+                frostBarOptions
             }
-            IceSection {
+            FrostSection {
                 showOnClick
                 showOnHover
                 showOnScroll
             }
-            IceSection {
+            FrostSection {
                 autoRehideOptions
             }
-            IceSection {
+            FrostSection {
                 spacingOptions
             }
         }
@@ -110,31 +110,31 @@ struct GeneralSettingsPane: View {
     }
 
     @ViewBuilder
-    private var iceIconOptions: some View {
-        Toggle("Show Ice icon", isOn: manager.bindings.showIceIcon)
+    private var frostIconOptions: some View {
+        Toggle("Show Ice icon", isOn: manager.bindings.showFrostIcon)
             .annotation {
-                if !manager.showIceIcon {
+                if !manager.showFrostIcon {
                     Text("You can still access Ice's settings by right-clicking an empty area in the menu bar")
                 }
             }
-        if manager.showIceIcon {
-            IceMenu("Ice icon") {
-                Picker("Ice icon", selection: manager.bindings.iceIcon) {
-                    ForEach(ControlItemImageSet.userSelectableIceIcons) { imageSet in
+        if manager.showFrostIcon {
+            FrostMenu("Ice icon") {
+                Picker("Ice icon", selection: manager.bindings.frostIcon) {
+                    ForEach(ControlItemImageSet.userSelectableFrostIcons) { imageSet in
                         Button {
-                            manager.iceIcon = imageSet
+                            manager.frostIcon = imageSet
                         } label: {
                             menuItem(for: imageSet)
                         }
                         .tag(imageSet)
                     }
-                    if let lastCustomIceIcon = manager.lastCustomIceIcon {
+                    if let lastCustomFrostIcon = manager.lastCustomFrostIcon {
                         Button {
-                            manager.iceIcon = lastCustomIceIcon
+                            manager.frostIcon = lastCustomFrostIcon
                         } label: {
-                            menuItem(for: lastCustomIceIcon)
+                            menuItem(for: lastCustomFrostIcon)
                         }
-                        .tag(lastCustomIceIcon)
+                        .tag(lastCustomFrostIcon)
                     }
                 }
                 .pickerStyle(.inline)
@@ -143,14 +143,14 @@ struct GeneralSettingsPane: View {
                 Divider()
 
                 Button("Choose image…") {
-                    isImportingCustomIceIcon = true
+                    isImportingCustomFrostIcon = true
                 }
             } title: {
-                menuItem(for: manager.iceIcon)
+                menuItem(for: manager.frostIcon)
             }
             .annotation("Choose a custom icon to show in the menu bar")
             .fileImporter(
-                isPresented: $isImportingCustomIceIcon,
+                isPresented: $isImportingCustomFrostIcon,
                 allowedContentTypes: [.image]
             ) { result in
                 do {
@@ -158,7 +158,7 @@ struct GeneralSettingsPane: View {
                     if url.startAccessingSecurityScopedResource() {
                         defer { url.stopAccessingSecurityScopedResource() }
                         let data = try Data(contentsOf: url)
-                        manager.iceIcon = ControlItemImageSet(name: .custom, image: .data(data))
+                        manager.frostIcon = ControlItemImageSet(name: .custom, image: .data(data))
                     }
                 } catch {
                     presentedError = LocalizedErrorWrapper(error)
@@ -166,41 +166,41 @@ struct GeneralSettingsPane: View {
                 }
             }
 
-            if case .custom = manager.iceIcon.name {
-                Toggle("Apply system theme to icon", isOn: manager.bindings.customIceIconIsTemplate)
+            if case .custom = manager.frostIcon.name {
+                Toggle("Apply system theme to icon", isOn: manager.bindings.customFrostIconIsTemplate)
                     .annotation("Display the icon as a monochrome image matching the system appearance")
             }
         }
     }
 
     @ViewBuilder
-    private var iceBarOptions: some View {
-        useIceBar
-        if manager.useIceBar {
-            iceBarLocationPicker
+    private var frostBarOptions: some View {
+        useFrostBar
+        if manager.useFrostBar {
+            frostBarLocationPicker
         }
     }
 
     @ViewBuilder
-    private var useIceBar: some View {
-        Toggle("Use Ice Bar", isOn: manager.bindings.useIceBar)
+    private var useFrostBar: some View {
+        Toggle("Use Ice Bar", isOn: manager.bindings.useFrostBar)
             .annotation("Show hidden menu bar items in a separate bar below the menu bar")
     }
 
     @ViewBuilder
-    private var iceBarLocationPicker: some View {
-        IcePicker("Location", selection: manager.bindings.iceBarLocation) {
-            ForEach(IceBarLocation.allCases) { location in
+    private var frostBarLocationPicker: some View {
+        FrostPicker("Location", selection: manager.bindings.frostBarLocation) {
+            ForEach(FrostBarLocation.allCases) { location in
                 Text(location.localized).tag(location)
             }
         }
         .annotation {
-            switch manager.iceBarLocation {
+            switch manager.frostBarLocation {
             case .dynamic:
                 Text("The Ice Bar's location changes based on context")
             case .mousePointer:
                 Text("The Ice Bar is centered below the mouse pointer")
-            case .iceIcon:
+            case .frostIcon:
                 Text("The Ice Bar is centered below the Ice icon")
             }
         }
@@ -226,8 +226,8 @@ struct GeneralSettingsPane: View {
 
     @ViewBuilder
     private var spacingOptions: some View {
-        IceLabeledContent {
-            IceSlider(
+        FrostLabeledContent {
+            FrostSlider(
                 localizedOffsetString(for: tempItemSpacingOffset),
                 value: $tempItemSpacingOffset,
                 in: -16...16,
@@ -235,7 +235,7 @@ struct GeneralSettingsPane: View {
             )
             .disabled(isApplyingOffset)
         } label: {
-            IceLabeledContent {
+            FrostLabeledContent {
                 Button("Apply") {
                     applyOffset()
                 }
@@ -269,7 +269,7 @@ struct GeneralSettingsPane: View {
             spacing: 2
         )
         .annotation(spacing: 10, font: .callout.bold()) {
-            IceGroupBox {
+            FrostGroupBox {
                 Label {
                     Text("Note: You may need to log out and back in for this setting to apply properly.")
                 } icon: {
@@ -285,7 +285,7 @@ struct GeneralSettingsPane: View {
 
     @ViewBuilder
     private var rehideStrategyPicker: some View {
-        IcePicker("Strategy", selection: manager.bindings.rehideStrategy) {
+        FrostPicker("Strategy", selection: manager.bindings.rehideStrategy) {
             ForEach(RehideStrategy.allCases) { strategy in
                 Text(strategy.localized).tag(strategy)
             }
@@ -309,7 +309,7 @@ struct GeneralSettingsPane: View {
             if case .timed = manager.rehideStrategy {
                 VStack {
                     rehideStrategyPicker
-                    IceSlider(
+                    FrostSlider(
                         rehideIntervalKey,
                         value: manager.bindings.rehideInterval,
                         in: 0...30,

@@ -1,6 +1,6 @@
 //
 //  VisualEffectView.swift
-//  Ice
+//  Frost
 //
 
 import SwiftUI

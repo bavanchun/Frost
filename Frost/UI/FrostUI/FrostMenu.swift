@@ -1,11 +1,11 @@
 //
-//  IceMenu.swift
-//  Ice
+//  FrostMenu.swift
+//  Frost
 //
 
 import SwiftUI
 
-struct IceMenu<Title: View, Label: View, Content: View>: View {
+struct FrostMenu<Title: View, Label: View, Content: View>: View {
     private let title: Title
     private let label: Label
     private let content: Content
@@ -47,7 +47,7 @@ struct IceMenu<Title: View, Label: View, Content: View>: View {
     }
 
     var body: some View {
-        IceLabeledContent {
+        FrostLabeledContent {
             Menu {
                 content
                     .labelStyle(.titleAndIcon)

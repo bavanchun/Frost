@@ -1,6 +1,6 @@
 //
 //  WindowInfo.swift
-//  Ice
+//  Frost
 //
 
 import Cocoa

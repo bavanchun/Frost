@@ -1,6 +1,6 @@
 //
 //  SettingsManager.swift
-//  Ice
+//  Frost
 //
 
 import Combine

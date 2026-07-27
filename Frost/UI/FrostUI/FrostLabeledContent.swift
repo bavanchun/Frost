@@ -1,11 +1,11 @@
 //
-//  IceLabeledContent.swift
-//  Ice
+//  FrostLabeledContent.swift
+//  Frost
 //
 
 import SwiftUI
 
-struct IceLabeledContent<Label: View, Content: View>: View {
+struct FrostLabeledContent<Label: View, Content: View>: View {
     private let label: Label
     private let content: Content
 

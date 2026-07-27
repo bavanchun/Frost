@@ -1,6 +1,6 @@
 //
 //  MenuBarAppearanceConfigurationV1.swift
-//  Ice
+//  Frost
 //
 
 import CoreGraphics

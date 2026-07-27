@@ -1,19 +1,19 @@
 //
-//  IceBar.swift
-//  Ice
+//  FrostBar.swift
+//  Frost
 //
 
 import Combine
 import SwiftUI
 
-// MARK: - IceBarPanel
+// MARK: - FrostBarPanel
 
-final class IceBarPanel: NSPanel {
+final class FrostBarPanel: NSPanel {
     private weak var appState: AppState?
 
     private(set) var currentSection: MenuBarSection.Name?
 
-    private lazy var colorManager = IceBarColorManager(iceBarPanel: self)
+    private lazy var colorManager = FrostBarColorManager(frostBarPanel: self)
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -102,7 +102,7 @@ final class IceBarPanel: NSPanel {
             return
         }
 
-        func getOrigin(for iceBarLocation: IceBarLocation) -> CGPoint {
+        func getOrigin(for frostBarLocation: FrostBarLocation) -> CGPoint {
             let menuBarHeight = screen.getMenuBarHeight() ?? 0
             let originY = ((screen.frame.maxY - 1) - menuBarHeight) - frame.height
 
@@ -110,15 +110,15 @@ final class IceBarPanel: NSPanel {
                 CGPoint(x: screen.frame.maxX - frame.width, y: originY)
             }
 
-            switch iceBarLocation {
+            switch frostBarLocation {
             case .dynamic:
                 if appState.eventManager.isMouseInsideEmptyMenuBarSpace {
                     return getOrigin(for: .mousePointer)
                 }
-                return getOrigin(for: .iceIcon)
+                return getOrigin(for: .frostIcon)
             case .mousePointer:
                 guard let location = MouseCursor.locationAppKit else {
-                    return getOrigin(for: .iceIcon)
+                    return getOrigin(for: .frostIcon)
                 }
 
                 let lowerBound = screen.frame.minX
@@ -129,7 +129,7 @@ final class IceBarPanel: NSPanel {
                 }
 
                 return CGPoint(x: (location.x - frame.width / 2).clamped(to: lowerBound...upperBound), y: originY)
-            case .iceIcon:
+            case .frostIcon:
                 let lowerBound = screen.frame.minX
                 let upperBound = screen.frame.maxX - frame.width
 
@@ -148,7 +148,7 @@ final class IceBarPanel: NSPanel {
             }
         }
 
-        setFrameOrigin(getOrigin(for: appState.settingsManager.generalSettingsManager.iceBarLocation))
+        setFrameOrigin(getOrigin(for: appState.settingsManager.generalSettingsManager.frostBarLocation))
     }
 
     func show(section: MenuBarSection.Name, on screen: NSScreen) async {
@@ -157,7 +157,7 @@ final class IceBarPanel: NSPanel {
         }
 
         // Important that we set the navigation state and current section before updating the cache.
-        appState.navigationState.isIceBarPresented = true
+        appState.navigationState.isFrostBarPresented = true
         currentSection = section
 
         await appState.itemManager.cacheItemsIfNeeded()
@@ -166,7 +166,7 @@ final class IceBarPanel: NSPanel {
             await appState.imageCache.updateCache()
         }
 
-        contentView = IceBarHostingView(appState: appState, colorManager: colorManager, screen: screen, section: section) { [weak self] in
+        contentView = FrostBarHostingView(appState: appState, colorManager: colorManager, screen: screen, section: section) { [weak self] in
             self?.close()
         }
 
@@ -185,26 +185,26 @@ final class IceBarPanel: NSPanel {
         super.close()
         contentView = nil
         currentSection = nil
-        appState?.navigationState.isIceBarPresented = false
+        appState?.navigationState.isFrostBarPresented = false
     }
 }
 
-// MARK: - IceBarHostingView
+// MARK: - FrostBarHostingView
 
-private final class IceBarHostingView: NSHostingView<AnyView> {
+private final class FrostBarHostingView: NSHostingView<AnyView> {
     override var safeAreaInsets: NSEdgeInsets {
         NSEdgeInsets()
     }
 
     init(
         appState: AppState,
-        colorManager: IceBarColorManager,
+        colorManager: FrostBarColorManager,
         screen: NSScreen,
         section: MenuBarSection.Name,
         closePanel: @escaping () -> Void
     ) {
         super.init(
-            rootView: IceBarContentView(screen: screen, section: section, closePanel: closePanel)
+            rootView: FrostBarContentView(screen: screen, section: section, closePanel: closePanel)
                 .environmentObject(appState)
                 .environmentObject(appState.imageCache)
                 .environmentObject(appState.itemManager)
@@ -229,11 +229,11 @@ private final class IceBarHostingView: NSHostingView<AnyView> {
     }
 }
 
-// MARK: - IceBarContentView
+// MARK: - FrostBarContentView
 
-private struct IceBarContentView: View {
+private struct FrostBarContentView: View {
     @EnvironmentObject var appState: AppState
-    @EnvironmentObject var colorManager: IceBarColorManager
+    @EnvironmentObject var colorManager: FrostBarColorManager
     @EnvironmentObject var itemManager: MenuBarItemManager
     @EnvironmentObject var imageCache: MenuBarItemImageCache
     @EnvironmentObject var menuBarManager: MenuBarManager
@@ -333,7 +333,7 @@ private struct IceBarContentView: View {
             ScrollView(.horizontal) {
                 HStack(spacing: 0) {
                     ForEach(items, id: \.windowID) { item in
-                        IceBarItemView(item: item, closePanel: closePanel)
+                        FrostBarItemView(item: item, closePanel: closePanel)
                     }
                 }
             }
@@ -347,9 +347,9 @@ private struct IceBarContentView: View {
     }
 }
 
-// MARK: - IceBarItemView
+// MARK: - FrostBarItemView
 
-private struct IceBarItemView: View {
+private struct FrostBarItemView: View {
     @EnvironmentObject var imageCache: MenuBarItemImageCache
     @EnvironmentObject var itemManager: MenuBarItemManager
 
@@ -401,7 +401,7 @@ private struct IceBarItemView: View {
             Image(nsImage: image)
                 .contentShape(Rectangle())
                 .overlay {
-                    IceBarItemClickView(item: item, leftClickAction: leftClickAction, rightClickAction: rightClickAction)
+                    FrostBarItemClickView(item: item, leftClickAction: leftClickAction, rightClickAction: rightClickAction)
                 }
                 .accessibilityLabel(item.displayName)
                 .accessibilityAction(named: "left click", leftClickAction)
@@ -410,9 +410,9 @@ private struct IceBarItemView: View {
     }
 }
 
-// MARK: - IceBarItemClickView
+// MARK: - FrostBarItemClickView
 
-private struct IceBarItemClickView: NSViewRepresentable {
+private struct FrostBarItemClickView: NSViewRepresentable {
     private final class Represented: NSView {
         let item: MenuBarItem
 

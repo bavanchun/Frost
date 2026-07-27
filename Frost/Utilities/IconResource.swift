@@ -1,6 +1,6 @@
 //
 //  IconResource.swift
-//  Ice
+//  Frost
 //
 
 import SwiftUI

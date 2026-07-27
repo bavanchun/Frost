@@ -1,6 +1,6 @@
 //
 //  MenuBarAppearanceEditor.swift
-//  Ice
+//  Frost
 //
 
 import SwiftUI
@@ -58,8 +58,8 @@ struct MenuBarAppearanceEditor: View {
 
     @ViewBuilder
     private var mainForm: some View {
-        IceForm(padding: mainFormPadding) {
-            IceSection {
+        FrostForm(padding: mainFormPadding) {
+            FrostSection {
                 isDynamicToggle
             }
             if appearanceManager.configuration.isDynamic {
@@ -68,12 +68,12 @@ struct MenuBarAppearanceEditor: View {
             } else {
                 StaticPartialEditor()
             }
-            IceSection("Menu Bar Shape") {
+            FrostSection("Menu Bar Shape") {
                 shapePicker
                 isInset
             }
             if case .settings = location {
-                IceGroupBox {
+                FrostGroupBox {
                     AnnotationView(
                         alignment: .center,
                         font: .callout.bold()
@@ -133,11 +133,11 @@ private struct UnlabeledPartialEditor: View {
     @Binding var configuration: MenuBarAppearancePartialConfiguration
 
     var body: some View {
-        IceSection {
+        FrostSection {
             tintPicker
             shadowToggle
         }
-        IceSection {
+        FrostSection {
             borderToggle
             borderColor
             borderWidth
@@ -146,9 +146,9 @@ private struct UnlabeledPartialEditor: View {
 
     @ViewBuilder
     private var tintPicker: some View {
-        IceLabeledContent("Tint") {
+        FrostLabeledContent("Tint") {
             HStack {
-                IcePicker("Tint", selection: $configuration.tintKind) {
+                FrostPicker("Tint", selection: $configuration.tintKind) {
                     ForEach(MenuBarTintKind.allCases) { tintKind in
                         Text(tintKind.localized).tag(tintKind)
                     }
@@ -190,7 +190,7 @@ private struct UnlabeledPartialEditor: View {
     @ViewBuilder
     private var borderColor: some View {
         if configuration.hasBorder {
-            IceLabeledContent("Border Color") {
+            FrostLabeledContent("Border Color") {
                 CustomColorPicker(
                     selection: $configuration.borderColor,
                     supportsOpacity: true,
@@ -203,7 +203,7 @@ private struct UnlabeledPartialEditor: View {
     @ViewBuilder
     private var borderWidth: some View {
         if configuration.hasBorder {
-            IcePicker(
+            FrostPicker(
                 "Border Width",
                 selection: $configuration.borderWidth
             ) {
@@ -223,7 +223,7 @@ private struct LabeledPartialEditor: View {
     let appearance: SystemAppearance
 
     var body: some View {
-        IceSection(options: .plain) {
+        FrostSection(options: .plain) {
             labelStack
         } content: {
             partialEditor

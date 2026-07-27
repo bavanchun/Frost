@@ -1,6 +1,6 @@
 //
 //  PermissionsView.swift
-//  Ice
+//  Frost
 //
 
 import SwiftUI
@@ -72,7 +72,7 @@ struct PermissionsView: View {
 
     @ViewBuilder
     private var explanationView: some View {
-        IceSection {
+        FrostSection {
             VStack {
                 Text("Ice needs permission to manage the menu bar.")
                 Text("Absolutely no personal information is collected or stored.")
@@ -132,7 +132,7 @@ struct PermissionsView: View {
 
     @ViewBuilder
     private func permissionBox(_ permission: Permission) -> some View {
-        IceSection {
+        FrostSection {
             VStack(spacing: 10) {
                 Text(permission.title)
                     .font(.title)
@@ -174,7 +174,7 @@ struct PermissionsView: View {
                 .allowsHitTesting(!permission.hasPermission)
 
                 if !permission.isRequired {
-                    IceGroupBox {
+                    FrostGroupBox {
                         AnnotationView(
                             alignment: .center,
                             font: .callout.bold()

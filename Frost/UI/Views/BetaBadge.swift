@@ -1,6 +1,6 @@
 //
 //  BetaBadge.swift
-//  Ice
+//  Frost
 //
 
 import SwiftUI

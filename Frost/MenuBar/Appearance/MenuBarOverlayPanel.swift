@@ -1,6 +1,6 @@
 //
 //  MenuBarOverlayPanel.swift
-//  Ice
+//  Frost
 //
 
 import Cocoa

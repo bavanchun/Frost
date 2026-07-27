@@ -1,6 +1,6 @@
 //
 //  MenuBarItem.swift
-//  Ice
+//  Frost
 //
 
 import Cocoa

@@ -1,6 +1,6 @@
 //
 //  ControlItem.swift
-//  Ice
+//  Frost
 //
 
 import Cocoa
@@ -11,7 +11,7 @@ import Combine
 final class ControlItem {
     /// Possible identifiers for control items.
     enum Identifier: String, CaseIterable {
-        case iceIcon = "SItem"
+        case frostIcon = "SItem"
         case hidden = "HItem"
         case alwaysHidden = "AHItem"
     }
@@ -72,7 +72,7 @@ final class ControlItem {
     /// A Boolean value that indicates whether the control item serves as
     /// a divider between sections.
     var isSectionDivider: Bool {
-        identifier != .iceIcon
+        identifier != .frostIcon
     }
 
     /// A Boolean value that indicates whether the control item is currently
@@ -89,7 +89,7 @@ final class ControlItem {
         // according to the identifier.
         if StatusItemDefaults[.preferredPosition, autosaveName] == nil {
             switch identifier {
-            case .iceIcon:
+            case .frostIcon:
                 StatusItemDefaults[.preferredPosition, autosaveName] = 0
             case .hidden:
                 StatusItemDefaults[.preferredPosition, autosaveName] = 1
@@ -227,16 +227,16 @@ final class ControlItem {
             .store(in: &c)
 
         if let appState {
-            appState.settingsManager.generalSettingsManager.$showIceIcon
+            appState.settingsManager.generalSettingsManager.$showFrostIcon
                 .receive(on: DispatchQueue.main)
-                .sink { [weak self] showIceIcon in
+                .sink { [weak self] showFrostIcon in
                     guard
                         let self,
                         !isSectionDivider
                     else {
                         return
                     }
-                    if showIceIcon {
+                    if showFrostIcon {
                         addToMenuBar()
                     } else {
                         removeFromMenuBar()
@@ -244,7 +244,7 @@ final class ControlItem {
                 }
                 .store(in: &c)
 
-            appState.settingsManager.generalSettingsManager.$iceIcon
+            appState.settingsManager.generalSettingsManager.$frostIcon
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] _ in
                     guard let self else {
@@ -254,7 +254,7 @@ final class ControlItem {
                 }
                 .store(in: &c)
 
-            appState.settingsManager.generalSettingsManager.$customIceIconIsTemplate
+            appState.settingsManager.generalSettingsManager.$customFrostIconIsTemplate
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] _ in
                     guard let self else {
@@ -264,16 +264,16 @@ final class ControlItem {
                 }
                 .store(in: &c)
 
-            appState.settingsManager.generalSettingsManager.$useIceBar
+            appState.settingsManager.generalSettingsManager.$useFrostBar
                 .receive(on: DispatchQueue.main)
-                .sink { [weak self] useIceBar in
+                .sink { [weak self] useFrostBar in
                     guard
                         let self,
                         let button = statusItem.button
                     else {
                         return
                     }
-                    if useIceBar {
+                    if useFrostBar {
                         button.sendAction(on: [.leftMouseDown, .rightMouseUp])
                     } else {
                         button.sendAction(on: [.leftMouseUp, .rightMouseUp])
@@ -344,7 +344,7 @@ final class ControlItem {
             isVisible = true
             // Enable the cell, as it may have been previously disabled.
             button.cell?.isEnabled = true
-            let icon = appState.settingsManager.generalSettingsManager.iceIcon
+            let icon = appState.settingsManager.generalSettingsManager.frostIcon
             // We can usually just set the image directly from the icon.
             button.image = switch state {
             case .hideItems: icon.hidden.nsImage(for: appState)

@@ -1,6 +1,6 @@
 //
 //  CodableColor.swift
-//  Ice
+//  Frost
 //
 
 import CoreGraphics

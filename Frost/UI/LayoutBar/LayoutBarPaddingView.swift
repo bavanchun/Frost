@@ -1,6 +1,6 @@
 //
 //  LayoutBarPaddingView.swift
-//  Ice
+//  Frost
 //
 
 import Cocoa

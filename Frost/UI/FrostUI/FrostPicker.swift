@@ -1,11 +1,11 @@
 //
-//  IcePicker.swift
-//  Ice
+//  FrostPicker.swift
+//  Frost
 //
 
 import SwiftUI
 
-struct IcePicker<Label: View, SelectionValue: Hashable, Content: View>: View {
+struct FrostPicker<Label: View, SelectionValue: Hashable, Content: View>: View {
     @Binding var selection: SelectionValue
 
     let label: Label
@@ -34,7 +34,7 @@ struct IcePicker<Label: View, SelectionValue: Hashable, Content: View>: View {
     }
 
     var body: some View {
-        IceLabeledContent {
+        FrostLabeledContent {
             Picker(selection: $selection) {
                 content
                     .labelStyle(.titleAndIcon)

@@ -1,6 +1,6 @@
 //
 //  MenuBarItemInfo.swift
-//  Ice
+//  Frost
 //
 
 /// A simplified version of a menu bar item.
@@ -38,22 +38,22 @@ extension MenuBarItemInfo {
 
     /// Information for an item that represents the Ice icon, a.k.a. the
     /// control item for the visible section.
-    static let iceIcon = MenuBarItemInfo(
-        namespace: .ice,
-        title: ControlItem.Identifier.iceIcon.rawValue
+    static let frostIcon = MenuBarItemInfo(
+        namespace: .frost,
+        title: ControlItem.Identifier.frostIcon.rawValue
     )
 
     /// Information for an item that represents the control item for the
     /// hidden section.
     static let hiddenControlItem = MenuBarItemInfo(
-        namespace: .ice,
+        namespace: .frost,
         title: ControlItem.Identifier.hidden.rawValue
     )
 
     /// Information for an item that represents the control item for the
     /// always-hidden section.
     static let alwaysHiddenControlItem = MenuBarItemInfo(
-        namespace: .ice,
+        namespace: .frost,
         title: ControlItem.Identifier.alwaysHidden.rawValue
     )
 
@@ -204,7 +204,7 @@ extension MenuBarItemInfo {
 // MARK: MenuBarItemInfo.Namespace Constants
 extension MenuBarItemInfo.Namespace {
     /// The namespace for menu bar items owned by Ice.
-    static let ice = Self(Constants.bundleIdentifier)
+    static let frost = Self(Constants.bundleIdentifier)
 
     /// The namespace for menu bar items owned by Control Center.
     static let controlCenter = Self("com.apple.controlcenter")

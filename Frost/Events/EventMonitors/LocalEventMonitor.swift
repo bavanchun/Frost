@@ -1,6 +1,6 @@
 //
 //  LocalEventMonitor.swift
-//  Ice
+//  Frost
 //
 
 import Cocoa

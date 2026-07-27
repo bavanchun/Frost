@@ -1,6 +1,6 @@
 //
 //  StatusItemDefaults.swift
-//  Ice
+//  Frost
 //
 
 import Cocoa

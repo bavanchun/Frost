@@ -1,33 +1,33 @@
 //
-//  IceSection.swift
-//  Ice
+//  FrostSection.swift
+//  Frost
 //
 
 import SwiftUI
 
-struct IceSectionOptions: OptionSet {
+struct FrostSectionOptions: OptionSet {
     let rawValue: Int
 
-    static let isBordered = IceSectionOptions(rawValue: 1 << 0)
-    static let hasDividers = IceSectionOptions(rawValue: 1 << 1)
+    static let isBordered = FrostSectionOptions(rawValue: 1 << 0)
+    static let hasDividers = FrostSectionOptions(rawValue: 1 << 1)
 
-    static let plain: IceSectionOptions = []
-    static let `default`: IceSectionOptions = [.isBordered, .hasDividers]
+    static let plain: FrostSectionOptions = []
+    static let `default`: FrostSectionOptions = [.isBordered, .hasDividers]
 }
 
-struct IceSection<Header: View, Content: View, Footer: View>: View {
+struct FrostSection<Header: View, Content: View, Footer: View>: View {
     private let header: Header
     private let content: Content
     private let footer: Footer
     private let spacing: CGFloat
-    private let options: IceSectionOptions
+    private let options: FrostSectionOptions
 
     private var isBordered: Bool { options.contains(.isBordered) }
     private var hasDividers: Bool { options.contains(.hasDividers) }
 
     init(
         spacing: CGFloat = 10,
-        options: IceSectionOptions = .default,
+        options: FrostSectionOptions = .default,
         @ViewBuilder header: () -> Header,
         @ViewBuilder content: () -> Content,
         @ViewBuilder footer: () -> Footer
@@ -41,7 +41,7 @@ struct IceSection<Header: View, Content: View, Footer: View>: View {
 
     init(
         spacing: CGFloat = 10,
-        options: IceSectionOptions = .default,
+        options: FrostSectionOptions = .default,
         @ViewBuilder content: () -> Content,
         @ViewBuilder footer: () -> Footer
     ) where Header == EmptyView {
@@ -56,7 +56,7 @@ struct IceSection<Header: View, Content: View, Footer: View>: View {
 
     init(
         spacing: CGFloat = 10,
-        options: IceSectionOptions = .default,
+        options: FrostSectionOptions = .default,
         @ViewBuilder header: () -> Header,
         @ViewBuilder content: () -> Content
     ) where Footer == EmptyView {
@@ -71,7 +71,7 @@ struct IceSection<Header: View, Content: View, Footer: View>: View {
 
     init(
         spacing: CGFloat = 10,
-        options: IceSectionOptions = .default,
+        options: FrostSectionOptions = .default,
         @ViewBuilder content: () -> Content
     ) where Header == EmptyView, Footer == EmptyView {
         self.init(spacing: spacing, options: options) {
@@ -86,7 +86,7 @@ struct IceSection<Header: View, Content: View, Footer: View>: View {
     init(
         _ title: LocalizedStringKey,
         spacing: CGFloat = 10,
-        options: IceSectionOptions = .default,
+        options: FrostSectionOptions = .default,
         @ViewBuilder content: () -> Content
     ) where Header == Text, Footer == EmptyView {
         self.init(spacing: spacing, options: options) {
@@ -99,7 +99,7 @@ struct IceSection<Header: View, Content: View, Footer: View>: View {
 
     var body: some View {
         if isBordered {
-            IceGroupBox(padding: spacing) {
+            FrostGroupBox(padding: spacing) {
                 header
             } content: {
                 dividedContent
@@ -118,7 +118,7 @@ struct IceSection<Header: View, Content: View, Footer: View>: View {
     @ViewBuilder
     private var dividedContent: some View {
         if hasDividers {
-            _VariadicView.Tree(IceSectionLayout(spacing: spacing)) {
+            _VariadicView.Tree(FrostSectionLayout(spacing: spacing)) {
                 content
                     .frame(maxWidth: .infinity)
             }
@@ -129,7 +129,7 @@ struct IceSection<Header: View, Content: View, Footer: View>: View {
     }
 }
 
-private struct IceSectionLayout: _VariadicView_UnaryViewRoot {
+private struct FrostSectionLayout: _VariadicView_UnaryViewRoot {
     let spacing: CGFloat
 
     @ViewBuilder

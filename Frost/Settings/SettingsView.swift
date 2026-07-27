@@ -1,6 +1,6 @@
 //
 //  SettingsView.swift
-//  Ice
+//  Frost
 //
 
 import SwiftUI

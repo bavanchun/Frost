@@ -1,6 +1,6 @@
 //
 //  MenuBarSection.swift
-//  Ice
+//  Frost
 //
 
 import Cocoa
@@ -50,17 +50,17 @@ final class MenuBarSection {
     private var rehideMonitor: UniversalEventMonitor?
 
     /// A Boolean value that indicates whether the Ice Bar should be used.
-    private var useIceBar: Bool {
-        appState?.settingsManager.generalSettingsManager.useIceBar ?? false
+    private var useFrostBar: Bool {
+        appState?.settingsManager.generalSettingsManager.useFrostBar ?? false
     }
 
     /// A weak reference to the menu bar manager's Ice Bar panel.
-    private weak var iceBarPanel: IceBarPanel? {
-        appState?.menuBarManager.iceBarPanel
+    private weak var frostBarPanel: FrostBarPanel? {
+        appState?.menuBarManager.frostBarPanel
     }
 
     /// The best screen to show the Ice Bar on.
-    private weak var screenForIceBar: NSScreen? {
+    private weak var screenForFrostBar: NSScreen? {
         guard let appState else {
             return nil
         }
@@ -73,25 +73,25 @@ final class MenuBarSection {
 
     /// A Boolean value that indicates whether the section is hidden.
     var isHidden: Bool {
-        if useIceBar {
+        if useFrostBar {
             if controlItem.state == .showItems {
                 return false
             }
             switch name {
             case .visible, .hidden:
-                return iceBarPanel?.currentSection != .hidden
+                return frostBarPanel?.currentSection != .hidden
             case .alwaysHidden:
-                return iceBarPanel?.currentSection != .alwaysHidden
+                return frostBarPanel?.currentSection != .alwaysHidden
             }
         }
         switch name {
         case .visible, .hidden:
-            if iceBarPanel?.currentSection == .hidden {
+            if frostBarPanel?.currentSection == .hidden {
                 return false
             }
             return controlItem.state == .hideItems
         case .alwaysHidden:
-            if iceBarPanel?.currentSection == .alwaysHidden {
+            if frostBarPanel?.currentSection == .alwaysHidden {
                 return false
             }
             return controlItem.state == .hideItems
@@ -118,7 +118,7 @@ final class MenuBarSection {
     convenience init(name: Name, appState: AppState) {
         let controlItem = switch name {
         case .visible:
-            ControlItem(identifier: .iceIcon, appState: appState)
+            ControlItem(identifier: .frostIcon, appState: appState)
         case .hidden:
             ControlItem(identifier: .hidden, appState: appState)
         case .alwaysHidden:
@@ -141,40 +141,40 @@ final class MenuBarSection {
             return
         }
         switch name {
-        case .visible where useIceBar, .hidden where useIceBar:
+        case .visible where useFrostBar, .hidden where useFrostBar:
             Task {
-                if let screenForIceBar {
-                    await iceBarPanel?.show(section: .hidden, on: screenForIceBar)
+                if let screenForFrostBar {
+                    await frostBarPanel?.show(section: .hidden, on: screenForFrostBar)
                 }
                 for section in appState.menuBarManager.sections {
                     section.controlItem.state = .hideItems
                 }
             }
-        case .alwaysHidden where useIceBar:
+        case .alwaysHidden where useFrostBar:
             Task {
-                if let screenForIceBar {
-                    await iceBarPanel?.show(section: .alwaysHidden, on: screenForIceBar)
+                if let screenForFrostBar {
+                    await frostBarPanel?.show(section: .alwaysHidden, on: screenForFrostBar)
                 }
                 for section in appState.menuBarManager.sections {
                     section.controlItem.state = .hideItems
                 }
             }
         case .visible:
-            iceBarPanel?.close()
+            frostBarPanel?.close()
             guard let hiddenSection = appState.menuBarManager.section(withName: .hidden) else {
                 return
             }
             controlItem.state = .showItems
             hiddenSection.controlItem.state = .showItems
         case .hidden:
-            iceBarPanel?.close()
+            frostBarPanel?.close()
             guard let visibleSection = appState.menuBarManager.section(withName: .visible) else {
                 return
             }
             controlItem.state = .showItems
             visibleSection.controlItem.state = .showItems
         case .alwaysHidden:
-            iceBarPanel?.close()
+            frostBarPanel?.close()
             guard
                 let hiddenSection = appState.menuBarManager.section(withName: .hidden),
                 let visibleSection = appState.menuBarManager.section(withName: .visible)
@@ -196,9 +196,9 @@ final class MenuBarSection {
         else {
             return
         }
-        iceBarPanel?.close()
+        frostBarPanel?.close()
         switch name {
-        case _ where useIceBar:
+        case _ where useFrostBar:
             for section in appState.menuBarManager.sections {
                 section.controlItem.state = .hideItems
             }

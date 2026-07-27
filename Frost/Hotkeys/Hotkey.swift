@@ -1,6 +1,6 @@
 //
 //  Hotkey.swift
-//  Ice
+//  Frost
 //
 
 import Combine

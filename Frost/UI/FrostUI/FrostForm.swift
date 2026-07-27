@@ -1,11 +1,11 @@
 //
-//  IceForm.swift
-//  Ice
+//  FrostForm.swift
+//  Frost
 //
 
 import SwiftUI
 
-struct IceForm<Content: View>: View {
+struct FrostForm<Content: View>: View {
     @Environment(\.isScrollEnabled) private var isScrollEnabled
     @State private var contentFrame = CGRect.zero
 
@@ -62,16 +62,16 @@ struct IceForm<Content: View>: View {
     private var contentStack: some View {
         VStack(alignment: alignment, spacing: spacing) {
             content
-                .toggleStyle(IceFormToggleStyle())
+                .toggleStyle(FrostFormToggleStyle())
         }
         .padding(padding)
         .onFrameChange(update: $contentFrame)
     }
 }
 
-private struct IceFormToggleStyle: ToggleStyle {
+private struct FrostFormToggleStyle: ToggleStyle {
     func makeBody(configuration: Configuration) -> some View {
-        IceLabeledContent {
+        FrostLabeledContent {
             Toggle(isOn: configuration.$isOn) {
                 configuration.label
             }

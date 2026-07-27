@@ -1,6 +1,6 @@
 //
 //  MenuBarShapePicker.swift
-//  Ice
+//  Frost
 //
 
 import SwiftUI
@@ -16,7 +16,7 @@ struct MenuBarShapePicker: View {
 
     @ViewBuilder
     private var shapeKindPicker: some View {
-        IcePicker("Shape Kind", selection: appearanceManager.bindings.configuration.shapeKind) {
+        FrostPicker("Shape Kind", selection: appearanceManager.bindings.configuration.shapeKind) {
             ForEach(MenuBarShapeKind.allCases, id: \.self) { shape in
                 switch shape {
                 case .none:

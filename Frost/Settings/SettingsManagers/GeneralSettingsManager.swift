@@ -1,6 +1,6 @@
 //
 //  GeneralSettingsManager.swift
-//  Ice
+//  Frost
 //
 
 import Combine
@@ -10,25 +10,25 @@ import Foundation
 final class GeneralSettingsManager: ObservableObject {
     /// A Boolean value that indicates whether the Ice icon
     /// should be shown.
-    @Published var showIceIcon = true
+    @Published var showFrostIcon = true
 
     /// An icon to show in the menu bar, with a different image
     /// for when items are visible or hidden.
-    @Published var iceIcon: ControlItemImageSet = .defaultIceIcon
+    @Published var frostIcon: ControlItemImageSet = .defaultFrostIcon
 
     /// The last user-selected custom Ice icon.
-    @Published var lastCustomIceIcon: ControlItemImageSet?
+    @Published var lastCustomFrostIcon: ControlItemImageSet?
 
     /// A Boolean value that indicates whether custom Ice icons
     /// should be rendered as template images.
-    @Published var customIceIconIsTemplate = false
+    @Published var customFrostIconIsTemplate = false
 
     /// A Boolean value that indicates whether to show hidden items
     /// in a separate bar below the menu bar.
-    @Published var useIceBar = false
+    @Published var useFrostBar = false
 
     /// The location where the Ice Bar appears.
-    @Published var iceBarLocation: IceBarLocation = .dynamic
+    @Published var frostBarLocation: FrostBarLocation = .dynamic
 
     /// A Boolean value that indicates whether the hidden section
     /// should be shown when the mouse pointer clicks in an empty
@@ -81,9 +81,9 @@ final class GeneralSettingsManager: ObservableObject {
     }
 
     private func loadInitialState() {
-        Defaults.ifPresent(key: .showIceIcon, assign: &showIceIcon)
-        Defaults.ifPresent(key: .customIceIconIsTemplate, assign: &customIceIconIsTemplate)
-        Defaults.ifPresent(key: .useIceBar, assign: &useIceBar)
+        Defaults.ifPresent(key: .showFrostIcon, assign: &showFrostIcon)
+        Defaults.ifPresent(key: .customFrostIconIsTemplate, assign: &customFrostIconIsTemplate)
+        Defaults.ifPresent(key: .useFrostBar, assign: &useFrostBar)
         Defaults.ifPresent(key: .showOnClick, assign: &showOnClick)
         Defaults.ifPresent(key: .showOnHover, assign: &showOnHover)
         Defaults.ifPresent(key: .showOnScroll, assign: &showOnScroll)
@@ -91,9 +91,9 @@ final class GeneralSettingsManager: ObservableObject {
         Defaults.ifPresent(key: .autoRehide, assign: &autoRehide)
         Defaults.ifPresent(key: .rehideInterval, assign: &rehideInterval)
 
-        Defaults.ifPresent(key: .iceBarLocation) { rawValue in
-            if let location = IceBarLocation(rawValue: rawValue) {
-                iceBarLocation = location
+        Defaults.ifPresent(key: .frostBarLocation) { rawValue in
+            if let location = FrostBarLocation(rawValue: rawValue) {
+                frostBarLocation = location
             }
         }
         Defaults.ifPresent(key: .rehideStrategy) { rawValue in
@@ -102,14 +102,14 @@ final class GeneralSettingsManager: ObservableObject {
             }
         }
 
-        if let data = Defaults.data(forKey: .iceIcon) {
+        if let data = Defaults.data(forKey: .frostIcon) {
             do {
-                iceIcon = try decoder.decode(ControlItemImageSet.self, from: data)
+                frostIcon = try decoder.decode(ControlItemImageSet.self, from: data)
             } catch {
                 Logger.generalSettingsManager.error("Error decoding Ice icon: \(error)")
             }
-            if case .custom = iceIcon.name {
-                lastCustomIceIcon = iceIcon
+            if case .custom = frostIcon.name {
+                lastCustomFrostIcon = frostIcon
             }
         }
     }
@@ -117,49 +117,49 @@ final class GeneralSettingsManager: ObservableObject {
     private func configureCancellables() {
         var c = Set<AnyCancellable>()
 
-        $showIceIcon
+        $showFrostIcon
             .receive(on: DispatchQueue.main)
-            .sink { showIceIcon in
-                Defaults.set(showIceIcon, forKey: .showIceIcon)
+            .sink { showFrostIcon in
+                Defaults.set(showFrostIcon, forKey: .showFrostIcon)
             }
             .store(in: &c)
 
-        $iceIcon
+        $frostIcon
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] iceIcon in
+            .sink { [weak self] frostIcon in
                 guard let self else {
                     return
                 }
-                if case .custom = iceIcon.name {
-                    lastCustomIceIcon = iceIcon
+                if case .custom = frostIcon.name {
+                    lastCustomFrostIcon = frostIcon
                 }
                 do {
-                    let data = try encoder.encode(iceIcon)
-                    Defaults.set(data, forKey: .iceIcon)
+                    let data = try encoder.encode(frostIcon)
+                    Defaults.set(data, forKey: .frostIcon)
                 } catch {
                     Logger.generalSettingsManager.error("Error encoding Ice icon: \(error)")
                 }
             }
             .store(in: &c)
 
-        $customIceIconIsTemplate
+        $customFrostIconIsTemplate
             .receive(on: DispatchQueue.main)
             .sink { isTemplate in
-                Defaults.set(isTemplate, forKey: .customIceIconIsTemplate)
+                Defaults.set(isTemplate, forKey: .customFrostIconIsTemplate)
             }
             .store(in: &c)
 
-        $useIceBar
+        $useFrostBar
             .receive(on: DispatchQueue.main)
-            .sink { useIceBar in
-                Defaults.set(useIceBar, forKey: .useIceBar)
+            .sink { useFrostBar in
+                Defaults.set(useFrostBar, forKey: .useFrostBar)
             }
             .store(in: &c)
 
-        $iceBarLocation
+        $frostBarLocation
             .receive(on: DispatchQueue.main)
             .sink { location in
-                Defaults.set(location.rawValue, forKey: .iceBarLocation)
+                Defaults.set(location.rawValue, forKey: .frostBarLocation)
             }
             .store(in: &c)
 

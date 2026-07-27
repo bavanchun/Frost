@@ -1,6 +1,6 @@
 //
 //  AdvancedSettingsPane.swift
-//  Ice
+//  Frost
 //
 
 import SwiftUI
@@ -27,22 +27,22 @@ struct AdvancedSettingsPane: View {
     }
 
     var body: some View {
-        IceForm {
-            IceSection {
+        FrostForm {
+            FrostSection {
                 hideApplicationMenus
                 showSectionDividers
                 showAllSectionsOnUserDrag
                 showContextMenuOnRightClick
             }
-            IceSection {
+            FrostSection {
                 enableAlwaysHiddenSection
                 canToggleAlwaysHiddenSection
             }
-            IceSection {
+            FrostSection {
                 showOnHoverDelaySlider
                 tempShowIntervalSlider
             }
-            IceSection("Permissions") {
+            FrostSection("Permissions") {
                 allPermissions
             }
         }
@@ -96,8 +96,8 @@ struct AdvancedSettingsPane: View {
 
     @ViewBuilder
     private var showOnHoverDelaySlider: some View {
-        IceLabeledContent {
-            IceSlider(
+        FrostLabeledContent {
+            FrostSlider(
                 formattedToSeconds(manager.showOnHoverDelay),
                 value: manager.bindings.showOnHoverDelay,
                 in: 0...1,
@@ -116,8 +116,8 @@ struct AdvancedSettingsPane: View {
 
     @ViewBuilder
     private var tempShowIntervalSlider: some View {
-        IceLabeledContent {
-            IceSlider(
+        FrostLabeledContent {
+            FrostSlider(
                 formattedToSeconds(manager.tempShowInterval),
                 value: manager.bindings.tempShowInterval,
                 in: 0...30,
@@ -147,7 +147,7 @@ struct AdvancedSettingsPane: View {
     @ViewBuilder
     private var allPermissions: some View {
         ForEach(appState.permissionsManager.allPermissions) { permission in
-            IceLabeledContent {
+            FrostLabeledContent {
                 if permission.hasPermission {
                     Label {
                         Text("Permission Granted")

@@ -1,6 +1,6 @@
 //
 //  Defaults.swift
-//  Ice
+//  Frost
 //
 
 import Foundation
@@ -140,10 +140,10 @@ extension Defaults {
 
         // MARK: General Settings
 
-        case showIceIcon = "ShowIceIcon"
-        case iceIcon = "IceIcon"
-        case customIceIconIsTemplate = "CustomIceIconIsTemplate"
-        case useIceBar = "UseIceBar"
+        case showFrostIcon = "ShowIceIcon"
+        case frostIcon = "IceIcon"
+        case customFrostIconIsTemplate = "CustomIceIconIsTemplate"
+        case useFrostBar = "UseIceBar"
         case showOnClick = "ShowOnClick"
         case showOnHover = "ShowOnHover"
         case showOnScroll = "ShowOnScroll"
@@ -173,8 +173,8 @@ extension Defaults {
 
         // MARK: Ice Bar Settings
 
-        case iceBarLocation = "IceBarLocation"
-        case iceBarPinnedLocation = "IceBarPinnedLocation"
+        case frostBarLocation = "IceBarLocation"
+        case frostBarPinnedLocation = "IceBarPinnedLocation"
 
         // MARK: Migration
 

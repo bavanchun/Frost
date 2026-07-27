@@ -1,6 +1,6 @@
 //
 //  Private.swift
-//  Ice
+//  Frost
 //
 
 import CoreGraphics

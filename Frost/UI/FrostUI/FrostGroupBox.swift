@@ -1,11 +1,11 @@
 //
-//  IceGroupBox.swift
-//  Ice
+//  FrostGroupBox.swift
+//  Frost
 //
 
 import SwiftUI
 
-struct IceGroupBox<Header: View, Content: View, Footer: View>: View {
+struct FrostGroupBox<Header: View, Content: View, Footer: View>: View {
     private let header: Header
     private let content: Content
     private let footer: Footer

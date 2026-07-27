@@ -1,6 +1,6 @@
 //
 //  MenuBarLayoutSettingsPane.swift
-//  Ice
+//  Frost
 //
 
 import SwiftUI
@@ -14,7 +14,7 @@ struct MenuBarLayoutSettingsPane: View {
         } else if appState.menuBarManager.isMenuBarHiddenBySystemUserDefaults {
             cannotArrange
         } else {
-            IceForm(alignment: .leading, spacing: 20) {
+            FrostForm(alignment: .leading, spacing: 20) {
                 header
                 layoutBars
             }
@@ -26,7 +26,7 @@ struct MenuBarLayoutSettingsPane: View {
         Text("Drag to arrange your menu bar items")
             .font(.title2)
 
-        IceGroupBox {
+        FrostGroupBox {
             AnnotationView(
                 alignment: .center,
                 font: .callout.bold()

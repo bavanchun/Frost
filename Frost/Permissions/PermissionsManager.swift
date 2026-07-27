@@ -1,6 +1,6 @@
 //
 //  PermissionsManager.swift
-//  Ice
+//  Frost
 //
 
 import Combine

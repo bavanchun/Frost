@@ -1,6 +1,6 @@
 //
 //  ControlItemImageSet.swift
-//  Ice
+//  Frost
 //
 
 /// A named set of images that are used by control items.
@@ -37,14 +37,14 @@ struct ControlItemImageSet: Codable, Hashable, Identifiable {
 
 extension ControlItemImageSet {
     /// The default image set for the Ice icon.
-    static let defaultIceIcon = ControlItemImageSet(
+    static let defaultFrostIcon = ControlItemImageSet(
         name: .dot,
         hidden: .catalog("DotFill"),
         visible: .catalog("DotStroke")
     )
 
     /// The image sets that the user can choose to display in the Ice icon.
-    static let userSelectableIceIcons = [
+    static let userSelectableFrostIcons = [
         ControlItemImageSet(
             name: .arrow,
             hidden: .symbol("arrowshape.left.fill"),

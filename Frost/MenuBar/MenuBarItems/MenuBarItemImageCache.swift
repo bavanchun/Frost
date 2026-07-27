@@ -1,6 +1,6 @@
 //
 //  MenuBarItemImageCache.swift
-//  Ice
+//  Frost
 //
 
 import Cocoa
@@ -226,10 +226,10 @@ final class MenuBarItemImageCache: ObservableObject {
             return
         }
 
-        let isIceBarPresented = await appState.navigationState.isIceBarPresented
+        let isFrostBarPresented = await appState.navigationState.isFrostBarPresented
         let isSearchPresented = await appState.navigationState.isSearchPresented
 
-        if !isIceBarPresented && !isSearchPresented {
+        if !isFrostBarPresented && !isSearchPresented {
             guard await appState.navigationState.isAppFrontmost else {
                 logSkippingCache(reason: "Ice Bar not visible, app not frontmost")
                 return
@@ -263,7 +263,7 @@ final class MenuBarItemImageCache: ObservableObject {
             return
         }
 
-        let isIceBarPresented = await appState.navigationState.isIceBarPresented
+        let isFrostBarPresented = await appState.navigationState.isFrostBarPresented
         let isSearchPresented = await appState.navigationState.isSearchPresented
         let isSettingsPresented = await appState.navigationState.isSettingsPresented
 
@@ -271,8 +271,8 @@ final class MenuBarItemImageCache: ObservableObject {
         if isSettingsPresented || isSearchPresented {
             sectionsNeedingDisplay = MenuBarSection.Name.allCases
         } else if
-            isIceBarPresented,
-            let section = await appState.menuBarManager.iceBarPanel.currentSection
+            isFrostBarPresented,
+            let section = await appState.menuBarManager.frostBarPanel.currentSection
         {
             sectionsNeedingDisplay.append(section)
         }

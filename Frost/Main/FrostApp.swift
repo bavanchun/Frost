@@ -1,12 +1,12 @@
 //
-//  IceApp.swift
-//  Ice
+//  FrostApp.swift
+//  Frost
 //
 
 import SwiftUI
 
 @main
-struct IceApp: App {
+struct FrostApp: App {
     @NSApplicationDelegateAdaptor var appDelegate: AppDelegate
     @ObservedObject var appState = AppState()
 

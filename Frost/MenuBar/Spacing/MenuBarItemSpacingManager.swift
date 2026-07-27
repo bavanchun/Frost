@@ -1,6 +1,6 @@
 //
 //  MenuBarItemSpacingManager.swift
-//  Ice
+//  Frost
 //
 
 import Cocoa

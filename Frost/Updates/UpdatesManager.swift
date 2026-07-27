@@ -1,6 +1,6 @@
 //
 //  UpdatesManager.swift
-//  Ice
+//  Frost
 //
 
 import Sparkle

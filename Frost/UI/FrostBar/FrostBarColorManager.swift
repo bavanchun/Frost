@@ -1,30 +1,30 @@
 //
-//  IceBarColorManager.swift
-//  Ice
+//  FrostBarColorManager.swift
+//  Frost
 //
 
 import Cocoa
 import Combine
 
-final class IceBarColorManager: ObservableObject {
+final class FrostBarColorManager: ObservableObject {
     @Published private(set) var colorInfo: MenuBarAverageColorInfo?
 
-    private weak var iceBarPanel: IceBarPanel?
+    private weak var frostBarPanel: FrostBarPanel?
 
     private var windowImage: CGImage?
 
     private var cancellables = Set<AnyCancellable>()
 
-    init(iceBarPanel: IceBarPanel) {
-        self.iceBarPanel = iceBarPanel
+    init(frostBarPanel: FrostBarPanel) {
+        self.frostBarPanel = frostBarPanel
         configureCancellables()
     }
 
     private func configureCancellables() {
         var c = Set<AnyCancellable>()
 
-        if let iceBarPanel {
-            iceBarPanel.publisher(for: \.screen)
+        if let frostBarPanel {
+            frostBarPanel.publisher(for: \.screen)
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] screen in
                     guard
@@ -39,14 +39,14 @@ final class IceBarColorManager: ObservableObject {
                 .store(in: &c)
 
             Publishers.CombineLatest(
-                iceBarPanel.publisher(for: \.frame),
-                iceBarPanel.publisher(for: \.isVisible)
+                frostBarPanel.publisher(for: \.frame),
+                frostBarPanel.publisher(for: \.isVisible)
             )
             .receive(on: DispatchQueue.main)
             .sink { [weak self] frame, isVisible in
                 guard
                     let self,
-                    let screen = iceBarPanel.screen,
+                    let screen = frostBarPanel.screen,
                     isVisible,
                     screen == .main
                 else {
@@ -71,18 +71,18 @@ final class IceBarColorManager: ObservableObject {
                     .mapToVoid()
             )
             .receive(on: DispatchQueue.main)
-            .sink { [weak self, weak iceBarPanel] in
+            .sink { [weak self, weak frostBarPanel] in
                 guard
                     let self,
-                    let iceBarPanel,
-                    let screen = iceBarPanel.screen,
+                    let frostBarPanel,
+                    let screen = frostBarPanel.screen,
                     screen == .main
                 else {
                     return
                 }
                 updateWindowImage(for: screen)
-                if iceBarPanel.isVisible {
-                    updateColorInfo(with: iceBarPanel.frame, screen: screen)
+                if frostBarPanel.isVisible {
+                    updateColorInfo(with: frostBarPanel.frame, screen: screen)
                 }
             }
             .store(in: &c)

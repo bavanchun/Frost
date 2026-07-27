@@ -1,6 +1,6 @@
 //
 //  MenuBarItemManager.swift
-//  Ice
+//  Frost
 //
 
 import Cocoa
@@ -43,7 +43,7 @@ final class MenuBarItemManager: ObservableObject {
 
                 if item.owningApplication == .current {
                     // Ice icon is the only item owned by Ice that should be included.
-                    guard item.title == ControlItem.Identifier.iceIcon.rawValue else {
+                    guard item.title == ControlItem.Identifier.frostIcon.rawValue else {
                         return false
                     }
                 }

@@ -1,6 +1,6 @@
 //
 //  LayoutBarScrollView.swift
-//  Ice
+//  Frost
 //
 
 import Cocoa

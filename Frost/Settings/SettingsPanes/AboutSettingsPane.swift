@@ -1,6 +1,6 @@
 //
 //  AboutSettingsPane.swift
-//  Ice
+//  Frost
 //
 
 import SwiftUI
@@ -51,7 +51,7 @@ struct AboutSettingsPane: View {
 
     @ViewBuilder
     private var mainForm: some View {
-        IceForm(padding: EdgeInsets(top: 5, leading: 30, bottom: 30, trailing: 30), spacing: 0) {
+        FrostForm(padding: EdgeInsets(top: 5, leading: 30, bottom: 30, trailing: 30), spacing: 0) {
             appIconAndCopyrightSection
                 .layoutPriority(1)
 
@@ -68,7 +68,7 @@ struct AboutSettingsPane: View {
 
     @ViewBuilder
     private var appIconAndCopyrightSection: some View {
-        IceSection(options: .plain) {
+        FrostSection(options: .plain) {
             HStack(spacing: 10) {
                 if let nsImage = NSImage(named: NSImage.applicationIconName) {
                     Image(nsImage: nsImage)
@@ -96,7 +96,7 @@ struct AboutSettingsPane: View {
 
     @ViewBuilder
     private var updatesSection: some View {
-        IceSection(options: .hasDividers) {
+        FrostSection(options: .hasDividers) {
             automaticallyCheckForUpdates
             automaticallyDownloadUpdates
             if updatesManager.canCheckForUpdates {

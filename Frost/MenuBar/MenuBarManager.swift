@@ -1,6 +1,6 @@
 //
 //  MenuBarManager.swift
-//  Ice
+//  Frost
 //
 
 import AXSwift
@@ -35,7 +35,7 @@ final class MenuBarManager: ObservableObject {
     private(set) var sections = [MenuBarSection]()
 
     /// The panel that contains the Ice Bar interface.
-    let iceBarPanel: IceBarPanel
+    let frostBarPanel: FrostBarPanel
 
     /// The panel that contains the menu bar search interface.
     let searchPanel: MenuBarSearchPanel
@@ -48,7 +48,7 @@ final class MenuBarManager: ObservableObject {
 
     /// Initializes a new menu bar manager instance.
     init(appState: AppState) {
-        self.iceBarPanel = IceBarPanel(appState: appState)
+        self.frostBarPanel = FrostBarPanel(appState: appState)
         self.searchPanel = MenuBarSearchPanel(appState: appState)
         self.appState = appState
     }
@@ -57,7 +57,7 @@ final class MenuBarManager: ObservableObject {
     func performSetup() {
         initializeSections()
         configureCancellables()
-        iceBarPanel.performSetup()
+        frostBarPanel.performSetup()
     }
 
     /// Performs the initial setup of the menu bar manager's sections.

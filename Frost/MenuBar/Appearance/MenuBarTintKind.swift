@@ -1,6 +1,6 @@
 //
 //  MenuBarTintKind.swift
-//  Ice
+//  Frost
 //
 
 import SwiftUI

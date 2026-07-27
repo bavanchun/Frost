@@ -1,6 +1,6 @@
 //
 //  HotkeyRegistry.swift
-//  Ice
+//  Frost
 //
 
 import Carbon.HIToolbox

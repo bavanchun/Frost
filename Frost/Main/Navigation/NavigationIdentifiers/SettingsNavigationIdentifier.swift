@@ -1,6 +1,6 @@
 //
 //  SettingsNavigationIdentifier.swift
-//  Ice
+//  Frost
 //
 
 /// An identifier used for navigation in the settings interface.

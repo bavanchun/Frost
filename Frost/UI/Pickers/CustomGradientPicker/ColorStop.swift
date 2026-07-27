@@ -1,6 +1,6 @@
 //
 //  ColorStop.swift
-//  Ice
+//  Frost
 //
 
 import CoreGraphics

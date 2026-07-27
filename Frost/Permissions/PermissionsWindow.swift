@@ -1,6 +1,6 @@
 //
 //  PermissionsWindow.swift
-//  Ice
+//  Frost
 //
 
 import SwiftUI

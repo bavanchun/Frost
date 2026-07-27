@@ -1,6 +1,6 @@
 //
 //  UserNotificationIdentifier.swift
-//  Ice
+//  Frost
 //
 
 /// An identifier for a user notification.
