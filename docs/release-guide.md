@@ -24,11 +24,11 @@ chmod 600 ~/.config/ice-vc/sparkle-private-ed25519-key
 
 Copy the printed public key (base64, 44 chars) into `Ice/Info.plist` → `SUPublicEDKey`. Never commit the private key.
 
-### 2. Apple ID in Xcode (for automatic signing)
+### 2. Signing approach: unsigned build + manual codesign
 
-If using automatic signing, open **Xcode → Settings → Accounts → +** and add the Apple ID (`van0328728779@icloud.com`). The team is `LC6N3KUML9` (Personal Team, free).
+**`xcodebuild archive` does not work with a free Personal Team on Xcode 26.6** — it requires a "Mac Development" certificate distinct from the "Apple Development" cert Xcode issues by default, and Personal (free) accounts cannot provision one. Both automatic (`CODE_SIGN_STYLE=Automatic`) and manual (`CODE_SIGN_STYLE=Manual` + explicit `CODE_SIGN_IDENTITY`) archive attempts fail — see [Troubleshooting](#troubleshooting) for the exact errors hit.
 
-If the Apple ID is not added, archive will fail with `No Account for Team "LC6N3KUML9"`. Workaround: override flags on `xcodebuild archive` (see [Troubleshooting](#troubleshooting)).
+**What actually works:** build unsigned with `xcodebuild build` (not `archive`), then manually `codesign` every nested bundle inside-out with the "Apple Development" identity already in Keychain. This is Step 3 below — do not try `xcodebuild archive` first, it wastes a round-trip.
 
 ### 3. GitHub CLI auth
 
@@ -63,44 +63,58 @@ Expected:
 - `DEVELOPMENT_TEAM = LC6N3KUML9;`
 - `INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © <year> VChun";`
 
-### Step 3 — Resolve deps, archive, export
+### Step 3 — Resolve deps, build unsigned, codesign manually
 
 ```bash
 # Refresh SPM deps (only if Package.resolved changed)
 xcodebuild -resolvePackageDependencies -scheme Ice -project Ice.xcodeproj
 
-# Clean + archive (output dir avoids the literal word 'build' which trips some hooks)
+# Clean + build UNSIGNED (output dir avoids the literal word 'build' which trips some hooks)
 rm -rf .release-output/
-xcodebuild archive \
+xcodebuild build \
   -scheme Ice \
   -project Ice.xcodeproj \
   -configuration Release \
-  -archivePath .release-output/Ice.xcarchive \
-  -allowProvisioningUpdates
+  -derivedDataPath .release-output/DerivedData \
+  CODE_SIGNING_ALLOWED=NO \
+  CODE_SIGNING_REQUIRED=NO
 
-# Export the .app from the archive
-xcodebuild -exportArchive \
-  -archivePath .release-output/Ice.xcarchive \
-  -exportOptionsPlist .release-output/ExportOptions.plist \
-  -exportPath .release-output/export
-
-# Verify signing
-codesign -dv --verbose=4 .release-output/export/Ice.app
+# Copy to a clean path for signing
+APP_PATH=$(find .release-output -name "Ice.app" -type d | head -1)
+mkdir -p .release-output/sign
+cp -R "$APP_PATH" .release-output/sign/Ice.app
 ```
 
-Expected codesign output: `Authority=Apple Development: van0328728779@icloud.com (LC6N3KUML9)`, `TeamIdentifier=LC6N3KUML9`, `Runtime Hardened`.
+Now codesign every nested bundle **inside-out** — XPC services and helper apps first, then the enclosing framework, then the main app last:
 
-The `ExportOptions.plist` lives at `.release-output/ExportOptions.plist`:
+```bash
+APP=".release-output/sign/Ice.app"
+CERT=$(security find-identity -v -p codesigning | grep "Apple Development" | head -1 | awk -F'"' '{print $2}')
+SPARKLE="$APP/Contents/Frameworks/Sparkle.framework/Versions/B"
 
-```xml
-<plist version="1.0">
-<dict>
-  <key>method</key><string>development</string>
-  <key>teamID</key><string>LC6N3KUML9</string>
-  <key>signingStyle</key><string>automatic</string>
-</dict>
-</plist>
+# 1. XPC services (innermost)
+codesign --force --options runtime --sign "$CERT" "$SPARKLE/XPCServices/Downloader.xpc"
+codesign --force --options runtime --sign "$CERT" "$SPARKLE/XPCServices/Installer.xpc"
+
+# 2. Updater.app (nested helper)
+codesign --force --options runtime --sign "$CERT" "$SPARKLE/Updater.app"
+
+# 3. Sparkle.framework itself
+codesign --force --options runtime --sign "$CERT" "$APP/Contents/Frameworks/Sparkle.framework"
+
+# 4. Main app, with entitlements, last
+codesign --force --options runtime \
+  --entitlements Ice/Ice.entitlements \
+  --sign "$CERT" "$APP"
+
+# Verify
+codesign --verify --verbose=4 "$APP"
+codesign -dv --verbose=4 "$APP"
 ```
+
+Expected: `Authority=Apple Development: <apple-id> (<TEAM_ID>)` chained to WWDR + Apple Root CA, `flags=0x10000(runtime)` (Hardened Runtime), `Identifier=com.vchun.Ice`. `codesign --verify` must print `valid on disk` + `satisfies its Designated Requirement`.
+
+If any nested bundle is missing from `Contents/Frameworks/`, re-run `find "$APP" -name "*.app" -o -name "*.xpc" -o -name "*.framework"` and sign every hit before the main app.
 
 ### Step 4 — Zip, sign zip, generate appcast
 
@@ -108,8 +122,8 @@ The `ExportOptions.plist` lives at `.release-output/ExportOptions.plist`:
 VERSION=0.11.12
 BUILD=1117
 
-# Zip preserving .app bundle structure
-cd .release-output/export
+# Zip preserving .app bundle structure (ditto -k preserves resource forks/signature)
+cd .release-output/sign
 ditto -c -k --keepParent Ice.app "../Ice-${VERSION}.zip"
 cd ../..
 
@@ -169,7 +183,7 @@ gh release create v${VERSION} \
 
 ```bash
 rm -rf /Applications/Ice.app
-cp -R .release-output/export/Ice.app /Applications/
+cp -R .release-output/sign/Ice.app /Applications/
 
 # Clear quarantine (Personal Team signing — Gatekeeper may warn)
 xattr -cr /Applications/Ice.app
@@ -177,24 +191,22 @@ xattr -cr /Applications/Ice.app
 open /Applications/Ice.app
 ```
 
-On first launch: grant Accessibility (required) and ScreenRecording (optional, for Ice Bar + appearance editor) permissions.
+On first launch: grant Accessibility (required) and ScreenRecording (optional, for Ice Bar + appearance editor) permissions. Verify the process is alive and using the fork's own UserDefaults domain:
+
+```bash
+pgrep -fl "Ice.app/Contents/MacOS/Ice"
+defaults read com.vchun.Ice SUHasLaunchedBefore   # 1 once Sparkle has initialized
+```
 
 ## Troubleshooting
 
-### `No Account for Team "LC6N3KUML9"`
+### `No Account for Team "LC6N3KUML9"` (archive)
 
-Xcode automatic signing can't reach Apple's provisioning servers. Either:
+Happens with `xcodebuild archive` + automatic signing. Adding the Apple ID in **Xcode → Settings → Accounts** does not fix this on a free Personal Team — see the next error.
 
-- Add the Apple ID in **Xcode → Settings → Accounts**, OR
-- Override signing at the command line:
+### `No signing certificate "Mac Development" found` (archive, any signing style)
 
-  ```bash
-  xcodebuild archive ... \
-    CODE_SIGN_STYLE=Manual \
-    CODE_SIGN_IDENTITY="Apple Development" \
-    DEVELOPMENT_TEAM=LC6N3KUML9 \
-    CODE_SIGN_REQUIRE_APPROVAL=NO
-  ```
+This is the actual blocker on Xcode 26.6 with a free Personal Team, confirmed by testing all three: automatic signing, manual signing with plain `CODE_SIGN_IDENTITY=Apple Development`, and manual signing with an SDK-scoped override (`CODE_SIGN_IDENTITY[sdk=macosx*]`). All three fail archive — Xcode's archive action insists on a "Mac Development" cert that free accounts cannot obtain. **Do not keep retrying archive flags.** Switch to `xcodebuild build` (unsigned) + manual `codesign`, as in Step 3.
 
 ### `xattr` quarantine warning persists
 
@@ -224,13 +236,16 @@ If missing, regenerate through Xcode Accounts → team → "Manage Certificates"
 
 - [ ] Bump `MARKETING_VERSION` + `CURRENT_PROJECT_VERSION` in `Ice.xcodeproj/project.pbxproj` (Debug + Release)
 - [ ] Commit changes on `main`
-- [ ] `xcodebuild archive` + `-exportArchive` → `.release-output/export/Ice.app`
+- [ ] `xcodebuild build` (unsigned) → `.release-output/sign/Ice.app`
+- [ ] `codesign` inside-out (XPC services → Updater.app → Sparkle.framework → main app)
+- [ ] `codesign --verify --verbose=4` confirms "valid on disk"
 - [ ] `ditto` zip + `sign_update` for EdDSA signature
 - [ ] Update `appcast.xml` (append `<item>`, bump `pubDate`)
 - [ ] `git tag v<x.y.z>` + `git push origin v<x.y.z>`
 - [ ] `gh release create v<x.y.z> Ice-<x.y.z>.zip appcast.xml`
 - [ ] Verify `curl -sIL .../releases/latest/download/appcast.xml` → 302 to new release
-- [ ] Install locally, confirm Settings → About → Check for Updates reports current version
+- [ ] Install locally, confirm process is running (`pgrep -fl Ice.app`) and `defaults read com.vchun.Ice` shows fork-owned keys
+- [ ] Settings → About → Check for Updates reports current version
 
 ## Pitfalls
 
@@ -238,3 +253,5 @@ If missing, regenerate through Xcode Accounts → team → "Manage Certificates"
 - **Bundle ID conflict.** If upstream `com.jordanbaird.Ice` is also installed, both apps share UserDefaults + keychain. Fork uses `com.vchun.Ice` to avoid this — do not revert.
 - **Private key safety.** `~/.config/ice-vc/sparkle-private-ed25519-key` is the only offline backup of the Sparkle signing key. If lost, all future updates require shipping a new `SUPublicEDKey` (forces a manual reinstall, breaking auto-update).
 - **Personal Team non-distributability.** Apps signed with the free Personal Team cert run only on Macs registered to the same Apple ID. Notarization requires a paid Apple Developer Program membership.
+- **`xcodebuild archive` cannot sign this app on a free Personal Team.** Confirmed across automatic and manual signing styles on Xcode 26.6 — always falls back to `xcodebuild build` (unsigned) + manual `codesign`. Do not spend time retrying archive-based signing flags on a fresh Personal Team; go straight to the unsigned-build path.
+- **Sign nested bundles before the outer one.** `codesign` on `Ice.app` alone does not re-sign `Sparkle.framework`'s nested `Updater.app`/`Downloader.xpc`/`Installer.xpc` — each needs its own `codesign` call, innermost first, or the outer signature's sealed resources will mismatch and `codesign --verify` fails.
