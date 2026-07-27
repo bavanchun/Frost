@@ -1,0 +1,42 @@
+name: Build
+
+# No paths filter: this check must report a status on every pull request so it
+# can be required for merging. A path-filtered workflow never reports on a pull
+# request that misses the filter, which leaves the required check pending
+# forever and blocks the merge.
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build (unsigned)
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Show toolchain
+        run: |
+          xcodebuild -version
+          swift --version
+
+      - name: Resolve package dependencies
+        run: xcodebuild -resolvePackageDependencies -scheme Frost -project Frost.xcodeproj
+
+      # Signing is deliberately disabled. Frost releases are signed locally with
+      # a free Personal Team certificate that cannot exist on a hosted runner;
+      # see docs/release-guide.md. CI verifies that the project compiles.
+      - name: Build
+        run: |
+          xcodebuild build \
+            -scheme Frost \
+            -project Frost.xcodeproj \
+            -configuration Release \
+            -derivedDataPath .ci-output \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO
