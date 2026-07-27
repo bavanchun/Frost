@@ -93,6 +93,17 @@ final class UpdatesManager: NSObject, ObservableObject {
 
 // MARK: UpdatesManager: SPUUpdaterDelegate
 extension UpdatesManager: @preconcurrency SPUUpdaterDelegate {
+    /// Suppresses Sparkle's built-in update-permission prompt.
+    ///
+    /// The prompt is shown as soon as the updater starts, before anything can
+    /// activate the app. Because this is an accessory app, that window never
+    /// becomes key, leaving a dialog on screen that cannot be clicked. The same
+    /// two settings are already exposed in the About pane, so the prompt is
+    /// redundant; the default comes from `SUEnableAutomaticChecks`.
+    func updaterShouldPromptForPermissionToCheck(forUpdates updater: SPUUpdater) -> Bool {
+        false
+    }
+
     func updater(_ updater: SPUUpdater, willScheduleUpdateCheckAfterDelay delay: TimeInterval) {
         guard let appState else {
             return

@@ -119,8 +119,8 @@ If any nested bundle is missing from `Contents/Frameworks/`, re-run `find "$APP"
 ### Step 4 — Zip, sign zip, generate appcast
 
 ```bash
-VERSION=1.0.0
-BUILD=1118
+VERSION=1.0.1
+BUILD=1119
 
 # Zip preserving .app bundle structure (ditto -k preserves resource forks/signature)
 cd .release-output/sign
@@ -143,7 +143,7 @@ Drop the signature + length from Step 4 into the enclosure:
   <channel>
     <title>Frost</title>
     <link>https://github.com/bavanchun/Frost/releases</link>
-    <description>Personal fork of Frost</description>
+    <description>Personal fork of Ice</description>
     <language>en</language>
     <item>
       <title>${VERSION}</title>
@@ -250,7 +250,7 @@ If missing, regenerate through Xcode Accounts → team → "Manage Certificates"
 ## Pitfalls
 
 - **Appcast must be on the latest release.** GitHub's `releases/latest/download/<file>` only resolves assets on the most recent published release.
-- **Bundle ID conflict.** If upstream `com.jordanbaird.Frost` is also installed, both apps share UserDefaults + keychain. Fork uses `com.vchun.Frost` to avoid this — do not revert.
+- **Bundle ID conflict.** If upstream `com.jordanbaird.Ice` is also installed, both apps share UserDefaults + keychain. Fork uses `com.vchun.Frost` to avoid this — do not revert.
 - **Private key safety.** `~/.config/frost/sparkle-private-ed25519-key` is the only offline backup of the Sparkle signing key. If lost, all future updates require shipping a new `SUPublicEDKey` (forces a manual reinstall, breaking auto-update).
 - **Personal Team non-distributability.** Apps signed with the free Personal Team cert run only on Macs registered to the same Apple ID. Notarization requires a paid Apple Developer Program membership.
 - **`xcodebuild archive` cannot sign this app on a free Personal Team.** Confirmed across automatic and manual signing styles on Xcode 26.6 — always falls back to `xcodebuild build` (unsigned) + manual `codesign`. Do not spend time retrying archive-based signing flags on a fresh Personal Team; go straight to the unsigned-build path.
