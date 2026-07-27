@@ -37,11 +37,29 @@ gh auth login   # choose github.com, account bavanchun, scope: repo
 gh auth status  # confirm active account is bavanchun
 ```
 
+## Versioning Policy
+
+`MARKETING_VERSION` follows semantic versioning, tagged as `vMAJOR.MINOR.PATCH`.
+
+| Bump | For | Example |
+|---|---|---|
+| PATCH | Bug fixes, refactoring, performance, docs, dependency updates, security fixes, tests, CI/CD — anything with no new user-facing feature | `v1.0.0` → `v1.0.1` |
+| MINOR | New features, commands, APIs, or UI components, all backward compatible | `v1.0.0` → `v1.1.0` |
+| MAJOR | Breaking changes: removed features, incompatible configuration, API changes, schema changes needing migration | `v1.0.0` → `v2.0.0` |
+
+Never bump MINOR or MAJOR for README edits, comments, formatting, refactoring alone, dependency updates, bug fixes, tests, or CI/CD. Those are always PATCH.
+
+When the correct bump is unclear, prefer PATCH over MINOR, and MINOR over MAJOR. Under-bumping is recoverable; an inflated version number is permanent once tagged.
+
+**Tags are never cut automatically.** Choosing the version is the maintainer's call — propose the number, get explicit approval, then tag (Step 6). This applies to automated tooling and AI collaborators.
+
+`CURRENT_PROJECT_VERSION` is a separate monotonic build counter, not part of this policy: it increments on every release regardless of bump size, because Sparkle orders updates by it.
+
 ## Per-Release Flow
 
 ### Step 1 — Bump version (if needed)
 
-Edit `Frost.xcodeproj/project.pbxproj`:
+Pick the new version per the Versioning Policy above, then edit `Frost.xcodeproj/project.pbxproj`:
 
 ```
 MARKETING_VERSION = <new.version>;       # e.g., 0.11.13
@@ -165,6 +183,8 @@ For subsequent releases, **append** a new `<item>` above the previous one. Spark
 
 ### Step 6 — Push tag, create GitHub release
 
+Confirm the version was approved (see Versioning Policy) before running this — pushing a tag is the point of no return.
+
 ```bash
 git tag v${VERSION}
 git push origin v${VERSION}
@@ -234,6 +254,7 @@ If missing, regenerate through Xcode Accounts → team → "Manage Certificates"
 
 ## Future-Release Checklist
 
+- [ ] Choose the bump per the Versioning Policy and get the version explicitly approved
 - [ ] Bump `MARKETING_VERSION` + `CURRENT_PROJECT_VERSION` in `Frost.xcodeproj/project.pbxproj` (Debug + Release)
 - [ ] Commit changes on `main`
 - [ ] `xcodebuild build` (unsigned) → `.release-output/sign/Frost.app`
