@@ -23,6 +23,7 @@ git rev-list --left-right --count main...upstream/main   # left = Frost-only, ri
 - Bundle identifier `com.vchun.Frost` and `DEVELOPMENT_TEAM`, replacing upstream's `com.jordanbaird.Ice`
 - Xcode project, target, scheme, and source folder renamed from `Ice` to `Frost`
 - Swift symbols and filenames renamed from `Ice*` to `Frost*`
+- Menu bar icon options: upstream's "Ice Cube" entry is a Snowflake SF Symbol here, the `IceCube` image assets are gone, and the surviving stroke image is `FrostMarkStroke` at the asset catalog root
 - Sparkle update configuration: `SUFeedURL` points at this fork's releases, `SUPublicEDKey` is this fork's key, and `SUEnableAutomaticChecks` suppresses the permission prompt that an accessory app cannot make clickable
 - Release infrastructure: unsigned build plus manual inside-out `codesign`, documented in [`release-guide.md`](release-guide.md)
 - Documentation: README, `FREQUENT_ISSUES.md`, [`DEVELOPMENT_WORKFLOW.md`](DEVELOPMENT_WORKFLOW.md), and this file
