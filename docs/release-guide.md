@@ -1,4 +1,4 @@
-# Frost-vc Release Guide
+# Frost Release Guide
 
 Personal-build release workflow for the `bavanchun/Frost` fork. Targets macOS 14+, signed with a free Personal Apple Developer account (no notarization, runs locally only).
 
@@ -141,7 +141,7 @@ Drop the signature + length from Step 4 into the enclosure:
 <?xml version="1.0" standalone="yes"?>
 <rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
   <channel>
-    <title>Frost-vc</title>
+    <title>Frost</title>
     <link>https://github.com/bavanchun/Frost/releases</link>
     <description>Personal fork of Frost</description>
     <language>en</language>
@@ -174,7 +174,7 @@ gh release create v${VERSION} \
   ".release-output/appcast.xml" \
   --repo bavanchun/Frost \
   --title "${VERSION}" \
-  --notes "Personal build of Frost-vc ${VERSION} (build ${BUILD})."
+  --notes "Personal build of Frost ${VERSION} (build ${BUILD})."
 ```
 
 **Both assets must upload to the same release.** Sparkle fetches `releases/latest/download/appcast.xml` (GitHub redirects to the latest release's `appcast.xml`), which then points at the same release's `Frost-${VERSION}.zip`.
