@@ -4,6 +4,8 @@ All notable changes to Frost are recorded here. Frost follows Semantic Versionin
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-07-28
+
 ### Added
 
 - Documented development workflow in [`docs/DEVELOPMENT_WORKFLOW.md`](docs/DEVELOPMENT_WORKFLOW.md): trunk-based branching, pull requests into `main`, Conventional Commits, and the upstream synchronization policy.
